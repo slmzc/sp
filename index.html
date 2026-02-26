@@ -119,7 +119,7 @@ body{
 
 /* search-wrap kept for market banner only */
 .search-wrap{
-  padding:8px 16px;
+  padding:5px 10px;
   background:var(--panel);
   border-bottom:1px solid var(--border);
 }
@@ -128,10 +128,10 @@ body{
 /* ── Market info banner ── */
 .market-banner{
   background:var(--faint);border:1px solid var(--border2);border-radius:4px;
-  padding:8px 14px;
+  padding:5px 10px;
 }
 .market-banner.show{display:block}
-.m-meta{display:flex;gap:16px;flex-wrap:wrap}
+.m-meta{display:flex;gap:10px;flex-wrap:wrap}
 .m-chip{
   font-family:var(--mono);font-size:.68rem;
   color:var(--muted);
@@ -370,7 +370,7 @@ tbody td{padding:6px 12px;white-space:nowrap;vertical-align:middle}
 .settings-btn{
   font-family:var(--mono);font-size:.65rem;
   background:transparent;border:1px solid var(--border2);
-  color:var(--muted);padding:3px 10px;border-radius:3px;cursor:pointer;
+  color:var(--muted);padding:4px 11px;border-radius:3px;cursor:pointer;
   transition:all .15s;white-space:nowrap;flex-shrink:0;
 }
 .settings-btn:hover{border-color:var(--blue);color:var(--blue)}
@@ -393,7 +393,7 @@ tbody td{padding:6px 12px;white-space:nowrap;vertical-align:middle}
 .ob-settings-name{font-family:var(--mono);font-size:.72rem;font-weight:700;color:var(--text);margin-bottom:2px}
 .ob-settings-desc{font-size:.68rem;color:var(--muted);line-height:1.5}
 /* ── Game State — inline in banner ── */
-.m-title-row{display:flex;align-items:center;gap:10px;margin-bottom:6px;flex-wrap:wrap}
+.m-title-row{display:flex;align-items:center;gap:10px;margin-bottom:3px;flex-wrap:wrap}
 .m-question{font-size:.84rem;font-weight:600;color:var(--text);line-height:1.4;flex:1;min-width:0}
 .gs-inline{
   display:flex;align-items:center;gap:6px;
@@ -422,14 +422,14 @@ tbody td{padding:6px 12px;white-space:nowrap;vertical-align:middle}
 /* ── Implied Probability Bar ── */
 .prob-bar-wrap{
   background:var(--panel);border:1px solid var(--border);border-radius:5px;
-  padding:10px 14px;margin-bottom:8px;
+  padding:5px 12px;margin-bottom:8px;
 }
-.prob-bar-row{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.prob-bar-row{display:flex;align-items:center;gap:10px;margin-bottom:3px}
 .prob-team{font-family:var(--mono);font-size:.7rem;font-weight:700;flex-shrink:0;min-width:52px}
 .prob-team.t0{color:var(--green)}
 .prob-team.t1{color:var(--red)}
 .prob-team.t-rest{color:var(--blue)}
-.prob-bar-track{flex:1;height:10px;border-radius:5px;overflow:hidden;background:var(--faint);display:flex}
+.prob-bar-track{flex:1;height:5px;border-radius:3px;overflow:hidden;background:var(--faint);display:flex}
 .prob-fill-0{background:var(--green);transition:width .4s}
 .prob-fill-1{background:var(--red);transition:width .4s}
 .prob-fill-rest{background:var(--blue);transition:width .4s}
@@ -503,51 +503,72 @@ tbody td{padding:6px 12px;white-space:nowrap;vertical-align:middle}
 }
 .pb-dismiss:hover{color:var(--text)}
 
-/* Panic event log */
-.panic-log-wrap{
-  display:none;
-  margin-top:10px;
-  background:var(--panel);border:1px solid var(--border);border-radius:5px;
-  overflow:hidden;
+/* ── Panic flash on team-spread card ── */
+@keyframes panicFlashBuy {
+  0%,100%{box-shadow:none;border-color:var(--border)}
+  15%{box-shadow:0 0 0 3px rgba(0,135,90,.45);border-color:var(--green)}
+  50%{box-shadow:0 0 0 2px rgba(0,135,90,.2);border-color:rgba(0,135,90,.5)}
 }
-.panic-log-wrap.show{display:block}
-.panic-log-header{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:7px 12px;background:var(--faint);
-  border-bottom:1px solid var(--border);
+@keyframes panicFlashSell {
+  0%,100%{box-shadow:none;border-color:var(--border)}
+  15%{box-shadow:0 0 0 3px rgba(201,40,62,.45);border-color:var(--red)}
+  50%{box-shadow:0 0 0 2px rgba(201,40,62,.2);border-color:rgba(201,40,62,.5)}
 }
-.panic-log-title{font-family:var(--mono);font-size:.65rem;font-weight:700;color:var(--muted);letter-spacing:.09em;text-transform:uppercase}
-.panic-log-clear{
-  font-family:var(--mono);font-size:.58rem;background:none;border:none;
-  color:var(--muted);cursor:pointer;padding:2px 5px;border-radius:2px;
-  transition:color .15s;
+.team-spread.panic-buy  { animation: panicFlashBuy  5s ease forwards }
+.team-spread.panic-sell { animation: panicFlashSell 5s ease forwards }
+
+/* ── Velocity badge on mid price ── */
+.vel-badge{
+  display:inline-flex;align-items:center;
+  font-family:var(--mono);font-size:.58rem;font-weight:700;
+  padding:1px 5px;border-radius:2px;margin-left:4px;
+  opacity:0;transition:opacity .3s;
 }
-.panic-log-clear:hover{color:var(--red)}
-.panic-log-body{max-height:200px;overflow-y:auto}
-.panic-log-body::-webkit-scrollbar{width:4px}
-.panic-log-body::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
-.panic-log-empty{
-  font-family:var(--mono);font-size:.68rem;color:var(--muted);
-  text-align:center;padding:20px;font-style:italic;
+.vel-badge.show{opacity:1}
+.vel-badge.up  {background:rgba(0,135,90,.12);color:var(--green)}
+.vel-badge.dn  {background:rgba(201,40,62,.1);color:var(--red)}
+
+/* ── Depth health bar ── */
+.depth-health-bar{
+  height:3px;border-radius:2px;margin-top:3px;
+  background:var(--faint);overflow:hidden;
 }
-.panic-event-row{
-  display:grid;grid-template-columns:80px 80px 1fr auto;
-  align-items:center;gap:8px;
-  padding:6px 12px;border-bottom:1px solid var(--border);
-  font-family:var(--mono);font-size:.68rem;
+.depth-health-fill{
+  height:100%;border-radius:2px;
+  background:var(--green);transition:width .4s,background .4s;
 }
-.panic-event-row:last-child{border-bottom:none}
-.pe-time{color:var(--muted);font-size:.6rem}
-.pe-dir{font-weight:700}
-.pe-dir.buy{color:var(--green)}
-.pe-dir.sell{color:var(--red)}
-.pe-detail{color:var(--text);font-size:.66rem}
-.pe-score{
-  font-size:.58rem;padding:1px 5px;border-radius:2px;
-  font-weight:700;white-space:nowrap;
+
+/* ── Smart alert ribbon ── */
+.smart-alert-ribbon{display:flex;flex-direction:column;gap:6px;margin-bottom:8px}
+.sa-item{
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  padding:7px 14px;border-radius:4px;
+  font-family:var(--mono);font-size:.72rem;
+  animation:saSlide .25s ease;
 }
-.pe-score.high{background:rgba(201,40,62,.12);color:var(--red)}
-.pe-score.med {background:rgba(180,83,9,.1); color:var(--yellow)}
+@keyframes saSlide{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.sa-item.spread  {background:rgba(180,83,9,.07);border:1px solid rgba(180,83,9,.3)}
+.sa-item.depth   {background:rgba(201,40,62,.07);border:1px solid rgba(201,40,62,.28)}
+.sa-item.stale   {background:rgba(88,96,105,.07);border:1px solid rgba(88,96,105,.25)}
+.sa-badge{
+  font-size:.58rem;font-weight:700;letter-spacing:.1em;
+  padding:1px 6px;border-radius:2px;flex-shrink:0;
+}
+.sa-item.spread  .sa-badge{background:var(--yellow);color:#fff}
+.sa-item.depth   .sa-badge{background:var(--red);color:#fff}
+.sa-item.stale   .sa-badge{background:var(--muted);color:#fff}
+.sa-label{font-weight:700}
+.sa-item.spread  .sa-label{color:var(--yellow)}
+.sa-item.depth   .sa-label{color:var(--red)}
+.sa-item.stale   .sa-label{color:var(--muted)}
+.sa-detail{color:var(--muted);font-size:.65rem;flex:1}
+.sa-age{font-size:.6rem;color:var(--muted);opacity:.7;white-space:nowrap}
+.sa-dismiss{
+  margin-left:auto;background:none;border:none;cursor:pointer;
+  font-size:.65rem;color:var(--muted);padding:2px 5px;border-radius:2px;
+  font-family:var(--mono);transition:color .15s;flex-shrink:0;
+}
+.sa-dismiss:hover{color:var(--text)}
 
 /* Toast notification (panic) */
 .panic-toast{
@@ -908,11 +929,57 @@ tbody td{padding:6px 12px;white-space:nowrap;vertical-align:middle}
 
 <!-- Market banner (shown after load) -->
 <div class="search-wrap" id="banner-wrap" style="display:none">
-  <div id="market-banner" class="market-banner" style="max-width:960px;margin:0 auto;display:none">
+  <div id="market-banner" class="market-banner" style="display:none">
     <div class="m-title-row">
       <div class="m-question" id="m-question"></div>
+      <button class="settings-btn" id="ob-settings-btn" onclick="toggleOBSettings()" title="Orderbook settings">⚙ Settings</button>
     </div>
     <div class="m-meta" id="m-meta"></div>
+  </div>
+  <!-- Settings panel — lives under banner, toggled by button above -->
+  <div class="ob-settings-panel" id="ob-settings-panel" style="margin:6px auto 0;">
+    <div class="ob-settings-row">
+      <div class="ob-settings-info">
+        <div class="ob-settings-name">Show All Outcome Books</div>
+        <div class="ob-settings-desc">Display tabs for every market outcome. Off = primary market only.</div>
+      </div>
+      <button class="toggle" id="outcomes-toggle" onclick="toggleAllOutcomes()" title="Show all outcome books"></button>
+    </div>
+    <div class="ob-settings-row">
+      <div class="ob-settings-info">
+        <div class="ob-settings-name">Arb Detector</div>
+        <div class="ob-settings-desc">Flag when team prices don't sum to 1.00 — possible arbitrage edge.</div>
+      </div>
+      <button class="toggle" id="arb-toggle" onclick="toggleArb()" title="Enable arb detector"></button>
+    </div>
+    <div class="ob-settings-row">
+      <div class="ob-settings-info">
+        <div class="ob-settings-name">Panic Detector</div>
+        <div class="ob-settings-desc">Alert when rapid price moves, depth collapses, or imbalance surges are detected — signs of panic buying or selling.</div>
+      </div>
+      <button class="toggle" id="panic-toggle" onclick="togglePanic()" title="Enable panic detector"></button>
+    </div>
+    <div class="ob-settings-row">
+      <div class="ob-settings-info">
+        <div class="ob-settings-name">Spread Alert</div>
+        <div class="ob-settings-desc">Fire when bid-ask spread widens above <b>3¢</b> — signals low liquidity or incoming volatility.</div>
+      </div>
+      <button class="toggle" id="spread-alert-toggle" onclick="toggleSpreadAlert()" title="Enable spread alert"></button>
+    </div>
+    <div class="ob-settings-row">
+      <div class="ob-settings-info">
+        <div class="ob-settings-name">Depth Collapse Alert</div>
+        <div class="ob-settings-desc">Fire when top-of-book depth drops ≥40% between ticks — a classic pre-move warning.</div>
+      </div>
+      <button class="toggle" id="depth-alert-toggle" onclick="toggleDepthAlert()" title="Enable depth collapse alert"></button>
+    </div>
+    <div class="ob-settings-row">
+      <div class="ob-settings-info">
+        <div class="ob-settings-name">Stale Book Detector</div>
+        <div class="ob-settings-desc">Warn when the book is unchanged for 4+ consecutive ticks — may indicate a closed or frozen market.</div>
+      </div>
+      <button class="toggle" id="stale-alert-toggle" onclick="toggleStaleAlert()" title="Enable stale book detector"></button>
+    </div>
   </div>
 </div>
 
@@ -1001,39 +1068,6 @@ tbody td{padding:6px 12px;white-space:nowrap;vertical-align:middle}
       <div class="outcome-tabs" id="outcome-tabs"></div>
     </div>
 
-    <!-- Order Books header -->
-    <div class="section-header">
-      <div class="section-label">Order Books</div>
-      <div class="section-line"></div>
-      <div class="section-tag tag-live">LIVE</div>
-      <button class="settings-btn" id="ob-settings-btn" onclick="toggleOBSettings()" title="Orderbook settings">⚙ Settings</button>
-    </div>
-
-    <!-- Settings panel (hidden by default) -->
-    <div class="ob-settings-panel" id="ob-settings-panel">
-      <div class="ob-settings-row">
-        <div class="ob-settings-info">
-          <div class="ob-settings-name">Show All Outcome Books</div>
-          <div class="ob-settings-desc">Display tabs for every market outcome. Off = primary market only.</div>
-        </div>
-        <button class="toggle" id="outcomes-toggle" onclick="toggleAllOutcomes()" title="Show all outcome books"></button>
-      </div>
-      <div class="ob-settings-row">
-        <div class="ob-settings-info">
-          <div class="ob-settings-name">Arb Detector</div>
-          <div class="ob-settings-desc">Flag when team prices don't sum to 1.00 — possible arbitrage edge.</div>
-        </div>
-        <button class="toggle" id="arb-toggle" onclick="toggleArb()" title="Enable arb detector"></button>
-      </div>
-      <div class="ob-settings-row">
-        <div class="ob-settings-info">
-          <div class="ob-settings-name">Panic Detector</div>
-          <div class="ob-settings-desc">Alert when rapid price moves, depth collapses, or imbalance surges are detected — signs of panic buying or selling.</div>
-        </div>
-        <button class="toggle on" id="panic-toggle" onclick="togglePanic()" title="Enable panic detector"></button>
-      </div>
-    </div>
-
     <!-- Implied Probability Bar (auto-shown when ≥2 tokens) -->
     <div id="prob-bar-container"></div>
 
@@ -1053,16 +1087,8 @@ tbody td{padding:6px 12px;white-space:nowrap;vertical-align:middle}
       <button class="pb-dismiss" onclick="dismissPanicBanner()">✕ dismiss</button>
     </div>
 
-    <!-- Panic event log -->
-    <div class="panic-log-wrap" id="panic-log-wrap">
-      <div class="panic-log-header">
-        <span class="panic-log-title">⚡ Panic Event Log</span>
-        <button class="panic-log-clear" onclick="clearPanicLog()">Clear log</button>
-      </div>
-      <div class="panic-log-body" id="panic-log-body">
-        <div class="panic-log-empty" id="panic-log-empty">No panic events detected yet. Events appear here in real-time.</div>
-      </div>
-    </div>
+    <!-- Smart alert ribbon (spread / depth / stale) -->
+    <div id="smart-alert-ribbon"></div>
 
     <!-- Dynamic team orderbooks injected here -->
     <div id="ob-teams-container"></div>
@@ -1164,7 +1190,8 @@ function addToHistory(url, title) {
   renderHistory();
 }
 
-function removeFromHistory(url) {
+function removeFromHistory(encodedUrl) {
+  const url = decodeURIComponent(encodedUrl);
   urlHistory = urlHistory.filter(h => h.url !== url);
   saveHistory();
   renderHistory();
@@ -1544,7 +1571,12 @@ async function loadOrderbook(market) {
   panicEventLog  = [];
   panicBannerDismissed = false;
   document.getElementById('panic-banner').classList.remove('show');
-  renderPanicLog();
+  // Reset smart alerts on new market load
+  smartAlerts = [];
+  Object.keys(staleTrack).forEach(k => delete staleTrack[k]);
+  Object.keys(spreadCooldown).forEach(k => delete spreadCooldown[k]);
+  Object.keys(depthCooldown).forEach(k => delete depthCooldown[k]);
+  renderSmartAlertRibbon();
   document.getElementById('prob-bar-container').innerHTML = '';
   document.getElementById('arb-banner').classList.remove('show');
 
@@ -1599,6 +1631,7 @@ function buildTeamSkeletons(tokenIds, names) {
             <div style="display:flex;align-items:center;gap:6px">
               <div class="spread-val blue" id="s-mid-${idx}">—</div>
               <svg class="sparkline" id="sparkline-${idx}" width="60" height="20" viewBox="0 0 60 20"></svg>
+              <span class="vel-badge" id="vel-${idx}"></span>
             </div>
           </div>
           <div class="spread-item">
@@ -1608,8 +1641,16 @@ function buildTeamSkeletons(tokenIds, names) {
               <div class="imbalance-txt">—</div>
             </div>
           </div>
-          <div class="spread-item"><div class="spread-lbl">Bid Depth</div><div class="spread-val" id="s-bidvol-${idx}">—</div></div>
-          <div class="spread-item"><div class="spread-lbl">Ask Depth</div><div class="spread-val" id="s-askvol-${idx}">—</div></div>
+          <div class="spread-item">
+            <div class="spread-lbl">Bid Depth</div>
+            <div class="spread-val" id="s-bidvol-${idx}">—</div>
+            <div class="depth-health-bar"><div class="depth-health-fill" id="bidhealth-${idx}" style="width:100%"></div></div>
+          </div>
+          <div class="spread-item">
+            <div class="spread-lbl">Ask Depth</div>
+            <div class="spread-val" id="s-askvol-${idx}">—</div>
+            <div class="depth-health-bar"><div class="depth-health-fill" id="askhealth-${idx}" style="width:100%"></div></div>
+          </div>
         </div>
       </div>
       <div class="ob-grid">
@@ -1704,10 +1745,16 @@ function renderTeamOrderbook(data, idx) {
   // ── Sparkline: track mid price history ──
   if (mid != null) {
     if (!priceHistory[idx]) priceHistory[idx] = [];
+    const lastMid = priceHistory[idx].length ? priceHistory[idx][priceHistory[idx].length - 1] : null;
     priceHistory[idx].push(mid);
     if (priceHistory[idx].length > 40) priceHistory[idx].shift();
     renderSparkline(idx);
+    // Velocity badge (shown outside panic detector so always visible)
+    if (lastMid != null) updateVelocityBadge(idx, mid, lastMid);
   }
+
+  // ── Depth health bars ──
+  updateDepthHealth(idx, bidDepth, askDepth);
 
   // ── Imbalance bar ──
   const total = bidDepth + askDepth;
@@ -1753,6 +1800,9 @@ function renderTeamOrderbook(data, idx) {
 
   // ── Panic Detector ──
   snapshotAndDetectPanic(idx, data);
+
+  // ── Smart Alerts (spread / depth / stale) ──
+  checkSmartAlerts(idx, data, panicSnapshots[idx]);
 }
 
 // ─────────────────────────────────────────────────────────
@@ -2043,7 +2093,6 @@ function renderImpliedProb() {
 
   container.innerHTML = `<div class="prob-bar-wrap">
     ${rows}
-    <div class="prob-sum">${sumTxt}</div>
   </div>`;
 }
 
@@ -2087,11 +2136,172 @@ function renderArbDetector() {
 // ─────────────────────────────────────────────────────────
 //  PANIC DETECTOR
 // ─────────────────────────────────────────────────────────
-let showPanicDetector = true;   // on by default
+let showPanicDetector = false;  // off by default
 let panicSnapshots   = {};      // {idx: [{ts, mid, bidDepth, askDepth, bestBid, bestAsk}, ...]}
-let panicEventLog    = [];      // [{ts, idx, name, dir, type, score, detail}]
+let panicEventLog    = [];      // kept for banner/toast history
 let panicToastTimer  = null;
 let panicBannerDismissed = false;
+
+// ─────────────────────────────────────────────────────────
+//  SMART ALERTS STATE
+// ─────────────────────────────────────────────────────────
+let showSpreadAlert   = false;
+let showDepthAlert    = false;
+let showStaleAlert    = false;
+
+// Per-token stale tracking: { idx: { sig, count } }
+const staleTrack = {};
+// Per-token spread cooldown: { idx: ts }
+const spreadCooldown = {};
+// Per-token depth collapse cooldown: { idx: ts }
+const depthCooldown = {};
+// Active smart alerts: [{id, kind, label, detail, ts}]
+let smartAlerts = [];
+let smartAlertId = 0;
+
+const SPREAD_THRESHOLD  = 0.030;   // 3¢ spread
+const DEPTH_COL_THRESH  = 0.40;    // 40% drop in one tick top-of-book
+const STALE_TICKS       = 4;       // 4 consecutive identical ticks (~20s)
+const ALERT_COOLDOWN_MS = 30000;   // 30s per-token cooldown per alert type
+
+function toggleSpreadAlert() {
+  showSpreadAlert = !showSpreadAlert;
+  document.getElementById('spread-alert-toggle').classList.toggle('on', showSpreadAlert);
+  if (!showSpreadAlert) dismissSmartAlertsByKind('spread');
+}
+function toggleDepthAlert() {
+  showDepthAlert = !showDepthAlert;
+  document.getElementById('depth-alert-toggle').classList.toggle('on', showDepthAlert);
+  if (!showDepthAlert) dismissSmartAlertsByKind('depth');
+}
+function toggleStaleAlert() {
+  showStaleAlert = !showStaleAlert;
+  document.getElementById('stale-alert-toggle').classList.toggle('on', showStaleAlert);
+  if (!showStaleAlert) dismissSmartAlertsByKind('stale');
+}
+
+function dismissSmartAlert(id) {
+  smartAlerts = smartAlerts.filter(a => a.id !== id);
+  renderSmartAlertRibbon();
+}
+function dismissSmartAlertsByKind(kind) {
+  smartAlerts = smartAlerts.filter(a => a.kind !== kind);
+  renderSmartAlertRibbon();
+}
+
+function fireSmartAlert(kind, label, detail) {
+  // Dedupe: only one active alert per kind+label
+  if (smartAlerts.some(a => a.kind === kind && a.label === label)) return;
+  smartAlerts.unshift({ id: smartAlertId++, kind, label, detail, ts: Date.now() });
+  if (smartAlerts.length > 8) smartAlerts.pop();
+  renderSmartAlertRibbon();
+  fireSmartToast(kind, label, detail);
+}
+
+function renderSmartAlertRibbon() {
+  const ribbon = document.getElementById('smart-alert-ribbon');
+  if (!ribbon) return;
+  if (smartAlerts.length === 0) { ribbon.innerHTML = ''; return; }
+  const kindLabel = { spread: 'SPREAD', depth: 'DEPTH', stale: 'STALE' };
+  ribbon.innerHTML = smartAlerts.map(a => {
+    const age = Math.round((Date.now() - a.ts) / 1000);
+    const ageStr = age < 60 ? `${age}s ago` : `${Math.round(age/60)}m ago`;
+    return `<div class="sa-item ${a.kind}">
+      <span class="sa-badge">${kindLabel[a.kind]}</span>
+      <span class="sa-label">${a.label}</span>
+      <span class="sa-detail">${a.detail}</span>
+      <span class="sa-age">${ageStr}</span>
+      <button class="sa-dismiss" onclick="dismissSmartAlert(${a.id})">✕</button>
+    </div>`;
+  }).join('');
+}
+
+// Ticker to update alert ages every 15s
+setInterval(() => { if (smartAlerts.length) renderSmartAlertRibbon(); }, 15000);
+
+let smartToastTimer = null;
+function fireSmartToast(kind, label, detail) {
+  const toast = document.getElementById('panic-toast');
+  if (!toast) return;
+  if (smartToastTimer) clearTimeout(smartToastTimer);
+  const icon = kind === 'spread' ? '📊' : kind === 'depth' ? '📉' : '🧊';
+  toast.className = `panic-toast ${kind === 'depth' ? 'sell' : 'stale'}`;
+  toast.style.background = kind === 'spread' ? 'var(--yellow)' : kind === 'depth' ? 'var(--red)' : 'var(--muted)';
+  toast.textContent = `${icon} ${label} — ${detail}`;
+  void toast.offsetWidth;
+  toast.classList.add('show');
+  smartToastTimer = setTimeout(() => toast.classList.remove('show'), 7000);
+}
+
+// ── Per-tick alert checks (called after each book render) ──
+function checkSmartAlerts(idx, data, snaps) {
+  const name = currentTokenNames[idx] || `Token ${idx+1}`;
+  const bids = (data.bids || []).sort((a,b) => parseFloat(b.price)-parseFloat(a.price));
+  const asks = (data.asks || []).sort((a,b) => parseFloat(a.price)-parseFloat(b.price));
+  const bestBid = bids.length ? parseFloat(bids[0].price) : null;
+  const bestAsk = asks.length ? parseFloat(asks[0].price) : null;
+  const spread  = (bestBid!=null && bestAsk!=null) ? bestAsk - bestBid : null;
+  const now = Date.now();
+
+  // ── Spread Alert ──
+  if (showSpreadAlert && spread !== null) {
+    const coolOk = !spreadCooldown[idx] || (now - spreadCooldown[idx]) > ALERT_COOLDOWN_MS;
+    if (spread >= SPREAD_THRESHOLD && coolOk) {
+      spreadCooldown[idx] = now;
+      fireSmartAlert('spread', `Wide Spread — ${name}`,
+        `Spread is ${(spread*100).toFixed(1)}¢ (threshold: ${(SPREAD_THRESHOLD*100).toFixed(0)}¢) · low liquidity`);
+    }
+    // Auto-dismiss when spread normalises
+    if (spread < SPREAD_THRESHOLD * 0.7) {
+      smartAlerts = smartAlerts.filter(a => !(a.kind === 'spread' && a.label.includes(name)));
+      renderSmartAlertRibbon();
+    }
+  }
+
+  // ── Depth Collapse Alert ──
+  if (showDepthAlert && snaps && snaps.length >= 2) {
+    const cur  = snaps[snaps.length - 1];
+    const prev = snaps[snaps.length - 2];
+    // Use only top-3 bid ticks as "top-of-book depth"
+    const topBidDepth = (book, n) => (book.bids||[])
+      .sort((a,b)=>parseFloat(b.price)-parseFloat(a.price))
+      .slice(0,n).reduce((s,o)=>s+parseFloat(o.size)*parseFloat(o.price),0);
+    const curTop  = topBidDepth(data, 3);
+    // Store previous top depth on the snap
+    if (!cur._topBid)  cur._topBid  = curTop;
+    if (!prev._topBid) prev._topBid = curTop;
+    const prevTop = prev._topBid || 0;
+    const coolOk  = !depthCooldown[idx] || (now - depthCooldown[idx]) > ALERT_COOLDOWN_MS;
+    if (prevTop > 50 && curTop < prevTop && coolOk) {
+      const drop = (prevTop - curTop) / prevTop;
+      if (drop >= DEPTH_COL_THRESH) {
+        depthCooldown[idx] = now;
+        fireSmartAlert('depth', `Depth Collapse — ${name}`,
+          `Top-of-book bid depth fell ${(drop*100).toFixed(0)}% in 1 tick ($${prevTop.toFixed(0)} → $${curTop.toFixed(0)})`);
+      }
+    }
+    cur._topBid = curTop;
+  }
+
+  // ── Stale Book Detector ──
+  if (showStaleAlert) {
+    const sig = `${bestBid}|${bestAsk}|${bids.length}|${asks.length}`;
+    if (!staleTrack[idx] || staleTrack[idx].sig !== sig) {
+      staleTrack[idx] = { sig, count: 1 };
+    } else {
+      staleTrack[idx].count++;
+      if (staleTrack[idx].count === STALE_TICKS) {
+        fireSmartAlert('stale', `Stale Book — ${name}`,
+          `Orderbook unchanged for ${STALE_TICKS} ticks (~${STALE_TICKS*5}s) — market may be closed or frozen`);
+      }
+    }
+    // Auto-dismiss stale alert when book changes
+    if (staleTrack[idx] && staleTrack[idx].count === 1) {
+      smartAlerts = smartAlerts.filter(a => !(a.kind === 'stale' && a.label.includes(name)));
+      renderSmartAlertRibbon();
+    }
+  }
+}
 
 const PANIC_WINDOW   = 8;       // snapshots to look back (≈40s at 5s refresh)
 const PANIC_SCORE_MED  = 2;
@@ -2223,6 +2433,8 @@ function snapshotAndDetectPanic(idx, data) {
 
   // Update per-outcome badge regardless of threshold
   updatePanicBadge(idx, score, dir, mid, prev.mid);
+  // Always update velocity badge from snapshot delta
+  updateVelocityBadge(idx, mid, prev.mid);
 
   if (score < PANIC_SCORE_MED || !dir) return;
 
@@ -2237,7 +2449,7 @@ function snapshotAndDetectPanic(idx, data) {
   if (panicEventLog.length > 100) panicEventLog.pop();
 
   renderPanicBanner(event);
-  renderPanicLog();
+  flashTeamSpread(idx, dir);       // ← flash the team card border
   firePanicNotification(event);
 }
 
@@ -2271,36 +2483,47 @@ function renderPanicBanner(event) {
   document.getElementById('pb-detail').textContent = event.detail;
 }
 
-function renderPanicLog() {
-  const body  = document.getElementById('panic-log-body');
-  const empty = document.getElementById('panic-log-empty');
-  const wrap  = document.getElementById('panic-log-wrap');
-
-  if (panicEventLog.length === 0) {
-    empty.style.display = 'block';
-    wrap.classList.remove('show');
-    return;
-  }
-  wrap.classList.add('show');
-  empty.style.display = 'none';
-
-  const rows = panicEventLog.slice(0, 40).map(e => {
-    const t   = new Date(e.ts).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit',second:'2-digit'});
-    return `<div class="panic-event-row">
-      <span class="pe-time">${t}</span>
-      <span class="pe-dir ${e.dir}">${e.type}</span>
-      <span class="pe-detail"><b>${e.name}</b> · ${e.detail}</span>
-      <span class="pe-score ${e.label === 'HIGH' ? 'high' : 'med'}">score:${e.score} ${e.label}</span>
-    </div>`;
-  }).join('');
-
-  body.innerHTML = rows;
+// ── Velocity badge on mid price ──
+function updateVelocityBadge(idx, mid, prevMid) {
+  const badge = document.getElementById('vel-' + idx);
+  if (!badge || prevMid == null || mid == null) return;
+  const delta = mid - prevMid;
+  const pct   = (Math.abs(delta) / prevMid * 100);
+  if (pct < 0.1) { badge.classList.remove('show','up','dn'); return; }
+  badge.className = `vel-badge show ${delta > 0 ? 'up' : 'dn'}`;
+  badge.textContent = `${delta > 0 ? '▲' : '▼'} ${pct.toFixed(2)}%`;
 }
 
-function clearPanicLog() {
-  panicEventLog = [];
-  document.getElementById('panic-banner').classList.remove('show');
-  renderPanicLog();
+// ── Depth health bar ──
+// peakDepth tracks the rolling max depth so we can show relative health
+const peakBidDepth = {};
+const peakAskDepth = {};
+function updateDepthHealth(idx, bidDepth, askDepth) {
+  peakBidDepth[idx] = Math.max(peakBidDepth[idx] || 0, bidDepth);
+  peakAskDepth[idx] = Math.max(peakAskDepth[idx] || 0, askDepth);
+  const bidPct = peakBidDepth[idx] > 0 ? (bidDepth / peakBidDepth[idx]) * 100 : 100;
+  const askPct = peakAskDepth[idx] > 0 ? (askDepth / peakAskDepth[idx]) * 100 : 100;
+
+  const bidBar = document.getElementById('bidhealth-' + idx);
+  const askBar = document.getElementById('askhealth-' + idx);
+  if (bidBar) {
+    bidBar.style.width = Math.max(bidPct, 2) + '%';
+    bidBar.style.background = bidPct < 30 ? 'var(--red)' : bidPct < 60 ? 'var(--yellow)' : 'var(--green)';
+  }
+  if (askBar) {
+    askBar.style.width = Math.max(askPct, 2) + '%';
+    askBar.style.background = askPct < 30 ? 'var(--red)' : askPct < 60 ? 'var(--yellow)' : 'var(--green)';
+  }
+}
+
+// ── Team-spread panic flash ──
+function flashTeamSpread(idx, dir) {
+  const el = document.getElementById('team-spread-' + idx);
+  if (!el) return;
+  el.classList.remove('panic-buy','panic-sell');
+  void el.offsetWidth; // force reflow to restart animation
+  el.classList.add(dir === 'buy' ? 'panic-buy' : 'panic-sell');
+  setTimeout(() => el.classList.remove('panic-buy','panic-sell'), 5500);
 }
 
 function firePanicNotification(event) {
