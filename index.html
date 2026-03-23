@@ -82,6 +82,13 @@ body{
 .load-btn:disabled{background:var(--border2);color:var(--muted);cursor:not-allowed}
 
 .topbar-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.version-chip{
+  font-family:var(--mono);font-size:.58rem;font-weight:700;
+  letter-spacing:.08em;color:var(--muted);
+  background:var(--faint);border:1px solid var(--border2);
+  border-radius:3px;padding:2px 7px;flex-shrink:0;
+  opacity:.7;user-select:none;
+}
 .refresh-btn{
   font-family:var(--mono);font-size:.65rem;
   background:transparent;border:1px solid var(--border2);
@@ -1144,11 +1151,7 @@ tbody td{padding:6px 12px;white-space:nowrap;vertical-align:middle}
   .mobile-history-bar.has-items{display:flex}
 }
 
-/* ══════════════════════════════════════════
-   CLOB MATCHED TRADES — Step 1+2 from PDF
-   ══════════════════════════════════════════ */
-
-/* Volume spike alert banner */
+/* ══ CLOB MATCHED TRADES ══ */
 .vol-spike-alert{
   display:flex;align-items:center;gap:10px;flex-wrap:wrap;
   padding:8px 14px;border-radius:4px;margin-bottom:8px;
@@ -1156,43 +1159,25 @@ tbody td{padding:6px 12px;white-space:nowrap;vertical-align:middle}
   font-family:var(--mono);font-size:.72rem;
   animation:saSlide .25s ease;
 }
-.vol-spike-badge{
-  font-size:.58rem;font-weight:700;letter-spacing:.1em;
-  padding:1px 6px;border-radius:2px;
-  background:var(--yellow);color:#fff;flex-shrink:0;
-}
+.vol-spike-badge{font-size:.58rem;font-weight:700;letter-spacing:.1em;padding:1px 6px;border-radius:2px;background:var(--yellow);color:#fff;flex-shrink:0}
 .vol-spike-label{font-weight:700;color:var(--yellow)}
 .vol-spike-detail{color:var(--muted);font-size:.65rem;flex:1}
 
-/* Whale badge on CLOB trade rows */
-.clob-trade-whale td:first-child::before{
-  content:'🐋 ';font-size:.62rem;
-}
-.clob-trade-whale{
-  background:rgba(180,83,9,.05) !important;
-  border-left:3px solid var(--yellow) !important;
-}
-.clob-trade-whale:hover{background:rgba(180,83,9,.1) !important}
+/* Whale rows in CLOB trades table */
+.clob-whale td:first-child::before{content:'🐋 ';font-size:.62rem}
+.clob-whale{background:rgba(180,83,9,.05)!important;border-left:3px solid var(--yellow)!important}
+.clob-whale:hover{background:rgba(180,83,9,.1)!important}
 
-/* ── Blockchain Tracking panel — Step 3 ── */
-.chain-track-panel{
-  background:var(--panel);border:1px solid var(--border);border-radius:5px;
-  overflow:hidden;
-}
+/* ══ BLOCKCHAIN TRACKING ══ */
+.chain-track-panel{background:var(--panel);border:1px solid var(--border);border-radius:5px;overflow:hidden}
 .chain-track-row{
   display:flex;align-items:center;gap:12px;flex-wrap:wrap;
   padding:9px 14px;border-bottom:1px solid var(--border);
   font-family:var(--mono);font-size:.72rem;
 }
 .chain-track-row:last-child{border-bottom:none}
-.chain-track-lbl{
-  color:var(--muted);font-size:.63rem;text-transform:uppercase;
-  letter-spacing:.06em;flex-shrink:0;min-width:90px;
-}
-.chain-track-val{
-  color:var(--text);word-break:break-all;flex:1;
-  font-size:.68rem;
-}
+.chain-track-lbl{color:var(--muted);font-size:.63rem;text-transform:uppercase;letter-spacing:.06em;flex-shrink:0;min-width:96px}
+.chain-track-val{color:var(--text);word-break:break-all;flex:1;font-size:.68rem}
 .polyscan-btn{
   font-family:var(--mono);font-size:.62rem;font-weight:700;
   background:rgba(9,105,218,.08);color:var(--blue);
@@ -1201,26 +1186,16 @@ tbody td{padding:6px 12px;white-space:nowrap;vertical-align:middle}
   transition:all .15s;white-space:nowrap;flex-shrink:0;
   display:inline-flex;align-items:center;gap:4px;
 }
-.polyscan-btn:hover{background:rgba(9,105,218,.16);color:var(--blue)}
+.polyscan-btn:hover{background:rgba(9,105,218,.16)}
 .polyscan-btn::before{content:'⛓';font-size:.7rem}
-.chain-track-note{
-  font-family:var(--mono);font-size:.65rem;color:var(--muted);
-  padding:10px 14px;line-height:1.6;
-}
-.chain-track-wallets{
-  max-height:220px;overflow-y:auto;
-  scrollbar-width:thin;scrollbar-color:var(--border2) transparent;
-}
+.chain-track-note{font-family:var(--mono);font-size:.65rem;color:var(--muted);padding:10px 14px;line-height:1.6}
+.chain-track-wallets{max-height:220px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border2) transparent}
 .chain-track-wallets::-webkit-scrollbar{width:4px}
 .chain-track-wallets::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
-.wallet-row{
-  display:flex;align-items:center;gap:10px;
-  padding:6px 14px;border-bottom:1px solid var(--border);
-  font-family:var(--mono);font-size:.68rem;
-}
+.wallet-row{display:flex;align-items:center;gap:10px;padding:6px 14px;border-bottom:1px solid var(--border);font-family:var(--mono);font-size:.68rem}
 .wallet-row:last-child{border-bottom:none}
-.wallet-addr{color:var(--text);flex:1;cursor:pointer;}
-.wallet-addr:hover{color:var(--blue);text-decoration:underline}
+.wallet-addr{color:var(--blue);flex:1;cursor:pointer;text-decoration:none}
+.wallet-addr:hover{text-decoration:underline}
 .wallet-count{font-size:.62rem;color:var(--muted);flex-shrink:0}
 .wallet-vol{font-size:.65rem;font-weight:700;color:var(--yellow);flex-shrink:0}
 </style>
@@ -1243,6 +1218,7 @@ tbody td{padding:6px 12px;white-space:nowrap;vertical-align:middle}
   </div>
   <div class="topbar-divider"></div>
   <div class="topbar-right">
+    <div class="version-chip">v1.1</div>
     <label class="auto-label">
       <button class="toggle" id="auto-toggle" onclick="toggleAuto()" title="Auto-refresh every 5s"></button>
       Auto
@@ -1483,14 +1459,14 @@ tbody td{padding:6px 12px;white-space:nowrap;vertical-align:middle}
       <b>CTF Exchange contract</b>. Pending orders that haven't been matched yet only exist in the CLOB, not on-chain.
     </div>
 
-    <!-- Blockchain Tracking — Step 3 from PDF guide -->
+    <!-- Blockchain Tracking (Step 3 from PDF) -->
     <div class="section-header" style="margin-top:20px">
       <div class="section-label">Blockchain Tracking</div>
       <div class="section-line"></div>
       <div class="section-tag tag-chain">POLYGONSCAN</div>
     </div>
     <div id="chain-tracking-wrap">
-      <div class="ob-empty" style="padding:20px">Load a market to see PolygonScan tracking links.</div>
+      <div class="ob-empty" style="padding:20px">Load a market to see tracking links.</div>
     </div>
 
   </div><!-- /market-data -->
@@ -1518,13 +1494,15 @@ const GAMMA_API  = 'https://gamma-api.polymarket.com';
 const CLOB_API   = 'https://clob.polymarket.com';
 
 // CORS proxies — tried in sequence until one works.
-// All of these set Access-Control-Allow-Origin: * and work from file:// (null origin).
+// These are tested to work from file:// (null origin). Ordered by reliability.
 const CORS_PROXIES = [
+  url => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+  url => `https://thingproxy.freeboard.io/fetch/${url}`,
   url => `https://corsproxy.io/?url=${encodeURIComponent(url)}`,
   url => `https://api.cors.lol/?url=${encodeURIComponent(url)}`,
-  url => `https://cors-proxy.fringe.zone/${url}`,
   url => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,
-  url => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+  url => `https://cors.eu.org/${url}`,
+  url => `https://crossorigin.me/${url}`,
 ];
 
 // Polygon RPCs with permissive CORS — work from file:// (null origin)
@@ -1549,7 +1527,8 @@ let currentMarket     = null;
 let currentTokenId    = null;
 let currentTokenIds   = [];
 let currentTokenNames = [];
-let currentConditionId = null;   // Step 1: stored for CLOB trades + blockchain tracking
+let currentConditionId = null;   // used for CLOB trades + blockchain tracking
+let clobTradeHistory   = [];     // rolling buffer for whale/spike detection
 let autoTimer         = null;
 let autoOn            = false;
 let showAllOutcomes   = false;
@@ -2015,7 +1994,7 @@ async function loadOrderbook(market) {
     throw new Error('No CLOB token IDs found for this market. It may be resolved or not yet active.');
   }
 
-  // Store condition ID — needed for CLOB trades endpoint (Step 1)
+  // Also capture condition ID directly from market object (may not be in banner yet)
   const cid = market.conditionId || market.condition_id;
   if (cid) currentConditionId = cid;
 
@@ -2030,15 +2009,8 @@ async function loadOrderbook(market) {
   latestBooks  = {};
   panicSnapshots = {};
   panicEventLog  = [];
+  clobTradeHistory = [];
   panicBannerDismissed = false;
-  clobTradeHistory = [];  // Step 1+2: reset CLOB trade buffer
-  // Reset CLOB trades + chain tracking panels
-  const clobEl = document.getElementById('clob-trades-wrap');
-  if (clobEl) clobEl.innerHTML = '<div class="loader"><div class="spinner"></div> Fetching CLOB trades…</div>';
-  const volEl = document.getElementById('vol-spike-wrap');
-  if (volEl) volEl.innerHTML = '';
-  const chainEl = document.getElementById('chain-tracking-wrap');
-  if (chainEl) chainEl.innerHTML = '<div class="ob-empty" style="padding:20px">Load a market to see PolygonScan tracking links.</div>';
   document.getElementById('panic-banner').classList.remove('show');
   // Reset smart alerts on new market load
   smartAlerts = [];
@@ -2048,6 +2020,13 @@ async function loadOrderbook(market) {
   renderSmartAlertRibbon();
   document.getElementById('prob-bar-container').innerHTML = '';
   document.getElementById('arb-banner').classList.remove('show');
+  // Reset new panels
+  const vsp = document.getElementById('vol-spike-wrap');
+  if (vsp) vsp.innerHTML = '';
+  const ctp = document.getElementById('clob-trades-wrap');
+  if (ctp) ctp.innerHTML = '<div class="loader"><div class="spinner"></div> Fetching CLOB trades…</div>';
+  const chp = document.getElementById('chain-tracking-wrap');
+  if (chp) chp.innerHTML = '<div class="ob-empty" style="padding:20px">Loading…</div>';
 
   document.getElementById('market-data').style.display = 'block';
 
@@ -2057,9 +2036,9 @@ async function loadOrderbook(market) {
   await Promise.all([
     refreshOrderbook(),
     fetchOnChainFills(tokenIds),
-    fetchCLOBTrades()           // Step 1+2: matched trades + pattern detection
+    fetchCLOBTrades()
   ]);
-  renderChainTracking();         // Step 3: PolygonScan tracking links
+  renderChainTracking();
 }
 
 // Extract outcome names aligned to tokenIds order
@@ -2489,7 +2468,7 @@ function renderMarketBanner(info) {
   // Condition ID
   const cid = info.conditionId || info.condition_id;
   if (cid) {
-    currentConditionId = cid; // ← Step 1: store globally for CLOB trades fetch
+    currentConditionId = cid; // store for CLOB trades + blockchain tracking
     chips.push(`<div class="m-chip"><span>Condition</span><b style="font-size:.58rem">${cid.slice(0,10)}…</b></div>`);
   }
 
@@ -4462,14 +4441,13 @@ function toggleAuto() {
     autoTimer = setInterval(async () => {
       tick++;
       try { await refreshOrderbook(true); } catch(e) {}
-      // Refresh game state + CLOB trades every 6 ticks (~30s)
+      // Every 6 ticks (~30s): refresh game state + CLOB trades
       if (tick % 6 === 0) {
         if (currentEventInfo) {
           try { await fetchGameState(currentEventInfo.event, currentEventInfo.markets); } catch(e) {}
         }
-        // Step 1+2: refresh matched trades + pattern detection
         try { await fetchCLOBTrades(); } catch(e) {}
-        renderChainTracking();   // Step 3: update wallet list as new trades arrive
+        renderChainTracking();
       }
       // Re-render match panel every tick if live data is available
       if (currentPandaRaw && currentPandaSport && currentPandaRaw.status === 'running') {
@@ -4538,116 +4516,95 @@ function useExample(url) {
 }
 
 // ─────────────────────────────────────────────────────────
-//  INIT
+//  CLOB MATCHED TRADES  (Step 1 + 2 from PDF)
+//  Uses public ?token_id= endpoint — no auth needed (avoids 401)
+//  Detects: 🐋 whale trades (> $1k USDC) + 🔥 volume spikes
 // ─────────────────────────────────────────────────────────
-// ─────────────────────────────────────────────────────────
-//  STEP 1 + 2 — CLOB MATCHED TRADES + PATTERN DETECTION
-//  Fetches from: clob.polymarket.com/trades?market=<conditionId>
-//  Detects: whale trades (> $1000 USDC) & volume spikes
-// ─────────────────────────────────────────────────────────
-
-const WHALE_THRESHOLD_USDC = 1000;   // Step 2: flag trades above this as 🐋
-const VOL_WINDOW_SECS      = 60;     // Step 2: volume spike window (1 min)
-const VOL_SPIKE_MULTIPLIER = 2;      // Step 2: spike = last-60s volume > avg * 2
-
-let clobTradeHistory = []; // rolling buffer for volume spike detection
+const WHALE_USDC    = 1000;
+const VOL_WIN_SECS  = 60;
 
 async function fetchCLOBTrades() {
-  const cid = currentConditionId;
-  const el  = document.getElementById('clob-trades-wrap');
-  if (!el) return;
-
-  if (!cid) {
-    el.innerHTML = `<div class="ob-empty" style="padding:24px">
-      No Condition ID found — CLOB trades unavailable.<br>
-      <span style="font-size:.65rem;color:var(--muted)">Some markets only expose token IDs; trades require a condition ID from the Gamma API.</span>
-    </div>`;
-    return;
-  }
-
-  el.innerHTML = '<div class="loader"><div class="spinner"></div> Fetching CLOB matched trades…</div>';
-
+  const el = document.getElementById('clob-trades-wrap');
+  if (!el || !currentTokenIds.length) return;
   try {
-    // Step 1: fetch from CLOB trades endpoint
-    const url  = `${CLOB_API}/trades?market=${cid}&limit=50`;
-    const data = await fetchCLOB(url);
-    const trades = (Array.isArray(data) ? data : (data.data || data.trades || []));
-    clobTradeHistory = trades; // store for auto-refresh spike detection
+    // Fetch per token_id — public endpoint, no auth required
+    const results = await Promise.all(
+      currentTokenIds.map(id =>
+        fetchCLOB(`${CLOB_API}/trades?token_id=${id}&limit=50`).catch(() => [])
+      )
+    );
+    // Merge + deduplicate across tokens
+    const seen = new Set();
+    const trades = results.flat().filter(t => {
+      const key = t.id || t.transaction_hash || (t.price + '|' + t.size + '|' + t.timestamp);
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    }).sort((a, b) => Number(b.timestamp || 0) - Number(a.timestamp || 0));
+    clobTradeHistory = trades;
     renderCLOBTrades(trades);
   } catch(e) {
-    el.innerHTML = `<div class="error-box">⚠ CLOB trades fetch failed: ${e.message}<br>
-      <span style="font-size:.68rem;opacity:.8">Endpoint: ${CLOB_API}/trades?market=${cid}</span></div>`;
+    el.innerHTML = `<div class="error-box">⚠ CLOB trades fetch failed: ${e.message}</div>`;
   }
 }
 
-// Step 2: render trades table with whale detection + volume spike alert
 function renderCLOBTrades(trades) {
   const el      = document.getElementById('clob-trades-wrap');
   const spikeEl = document.getElementById('vol-spike-wrap');
   if (!el) return;
 
   // ── Volume spike detection (Step 2) ──
-  const now = Date.now() / 1000;
-  const recent = trades.filter(t => {
-    const ts = t.timestamp ? (typeof t.timestamp === 'string'
-      ? new Date(t.timestamp).getTime() / 1000
-      : Number(t.timestamp)) : 0;
-    return (now - ts) < VOL_WINDOW_SECS;
-  });
-  const recentVol  = recent.reduce((s, t) => s + parseFloat(t.size || 0) * parseFloat(t.price || 0), 0);
-  const totalVol   = trades.reduce((s, t) => s + parseFloat(t.size || 0) * parseFloat(t.price || 0), 0);
-  const avgPerMin  = trades.length > 0 && totalVol > 0
-    ? totalVol / Math.max(1, trades.length) * (VOL_WINDOW_SECS / 60)
-    : 0;
-  const isSpike = recentVol > 0 && avgPerMin > 0 && recentVol > avgPerMin * VOL_SPIKE_MULTIPLIER;
-
+  const now      = Date.now() / 1000;
+  const recent   = trades.filter(t => now - Number(t.timestamp || 0) < VOL_WIN_SECS);
+  const recentVol = recent.reduce((s, t) => s + parseFloat(t.price||0) * parseFloat(t.size||0), 0);
+  const totalVol  = trades.reduce((s, t) => s + parseFloat(t.price||0) * parseFloat(t.size||0), 0);
+  const avgPerMin = trades.length ? (totalVol / Math.max(1, trades.length)) : 0;
+  const isSpike   = recentVol > 0 && avgPerMin > 0 && recentVol > avgPerMin * 2;
   if (spikeEl) {
-    if (isSpike) {
-      spikeEl.innerHTML = `<div class="vol-spike-alert">
-        <span class="vol-spike-badge">🔥 SPIKE</span>
-        <span class="vol-spike-label">Volume Spike Detected</span>
-        <span class="vol-spike-detail">Last 60s: $${recentVol.toFixed(0)} USDC vs avg $${avgPerMin.toFixed(0)}/min — ${(recentVol / avgPerMin).toFixed(1)}x normal</span>
-      </div>`;
-    } else {
-      spikeEl.innerHTML = '';
-    }
+    spikeEl.innerHTML = isSpike
+      ? `<div class="vol-spike-alert">
+           <span class="vol-spike-badge">🔥 SPIKE</span>
+           <span class="vol-spike-label">Volume Spike Detected</span>
+           <span class="vol-spike-detail">Last 60s: $${recentVol.toFixed(0)} USDC — ${(recentVol/avgPerMin).toFixed(1)}× normal rate</span>
+         </div>`
+      : '';
   }
 
-  if (!trades || trades.length === 0) {
-    el.innerHTML = `<div class="trades-table-wrap"><div class="ob-empty" style="padding:24px">
-      No matched trades found via CLOB for this condition ID.<br>
-      <span style="font-size:.65rem;color:var(--muted)">Trades only appear after orders are matched. Check back once trading begins.</span>
-    </div></div>`;
+  if (!trades.length) {
+    el.innerHTML = `<div class="trades-table-wrap">
+      <div class="ob-empty" style="padding:24px">
+        No matched trades yet — trades appear once orders are filled on the CLOB.<br>
+        <span style="font-size:.65rem;color:var(--muted)">Check back as the match progresses.</span>
+      </div></div>`;
     return;
   }
 
-  // ── Render trades table with whale flagging ──
+  // ── Render with whale flagging (Step 2) ──
   let whaleCount = 0;
   const rows = trades.slice(0, 50).map(t => {
-    const side     = (t.side || t.maker_side || 'BUY').toUpperCase();
-    const price    = parseFloat(t.price || 0);
-    const size     = parseFloat(t.size || t.original_size || 0);
-    const usdc     = price * size;
-    const isWhale  = usdc >= WHALE_THRESHOLD_USDC;
+    const rawSide = (t.side || t.outcome || '').toUpperCase();
+    const side    = rawSide.includes('NO') ? 'SELL' : rawSide.includes('YES') ? 'BUY' : rawSide || 'BUY';
+    const price   = parseFloat(t.price  || 0);
+    const size    = parseFloat(t.size   || t.original_size || 0);
+    const usdc    = price * size;
+    const isWhale = usdc >= WHALE_USDC;
     if (isWhale) whaleCount++;
 
-    // Timestamp formatting
-    let ageStr = '—';
-    if (t.timestamp) {
-      const ts  = typeof t.timestamp === 'string' ? new Date(t.timestamp).getTime() : Number(t.timestamp) * 1000;
-      const age = Math.round((Date.now() - ts) / 1000);
-      ageStr = age < 60 ? age + 's ago' : age < 3600 ? Math.round(age/60) + 'm ago' : Math.round(age/3600) + 'h ago';
-    }
+    const ts  = t.timestamp ? Number(t.timestamp) : 0;
+    const age = ts ? Math.round(now - ts) : 0;
+    const ageStr = !age ? '—'
+      : age < 60   ? age + 's ago'
+      : age < 3600 ? Math.round(age/60) + 'm ago'
+      : Math.round(age/3600) + 'h ago';
 
-    // Maker wallet — link to PolygonScan (Step 3 synergy)
-    const maker = t.maker_address || t.taker_address || '';
+    const maker = t.maker_address || '';
     const makerHtml = maker
       ? `<a href="https://polygonscan.com/address/${maker}" target="_blank" rel="noopener"
-           class="td-hash" title="Track wallet on PolygonScan: ${maker}">${maker.slice(0,6)}…${maker.slice(-4)}</a>`
+            class="td-hash" title="Track ${maker} on PolygonScan">${maker.slice(0,6)}…${maker.slice(-4)}</a>`
       : '—';
 
-    return `<tr class="${isWhale ? 'clob-trade-whale' : ''}">
-      <td class="${side === 'BUY' ? 'td-buy' : 'td-sell'}">${side}</td>
+    return `<tr class="${isWhale ? 'clob-whale' : ''}">
+      <td class="${side==='BUY'?'td-buy':'td-sell'}">${side}</td>
       <td>${fmtP(price)}</td>
       <td>${fmtSize(size)}</td>
       <td>${usdc > 0 ? '$' + usdc.toFixed(2) : '—'}</td>
@@ -4656,32 +4613,27 @@ function renderCLOBTrades(trades) {
     </tr>`;
   }).join('');
 
-  const whaleNote = whaleCount > 0
-    ? `· 🐋 ${whaleCount} whale trade${whaleCount>1?'s':''} (>$${WHALE_THRESHOLD_USDC})`
+  const whaleNote = whaleCount
+    ? ` · 🐋 ${whaleCount} whale trade${whaleCount>1?'s':''} (>$${WHALE_USDC})`
     : '';
 
   el.innerHTML = `
     <div class="trades-table-wrap">
       <table>
-        <thead>
-          <tr>
-            <th>Side</th><th>Price</th><th>Shares</th><th>USDC</th>
-            <th>Maker Wallet ↗ PolygonScan</th><th>Age</th>
-          </tr>
-        </thead>
+        <thead><tr>
+          <th>Side</th><th>Price</th><th>Shares</th><th>USDC</th>
+          <th>Maker ↗ PolygonScan</th><th>Age</th>
+        </tr></thead>
         <tbody>${rows}</tbody>
       </table>
     </div>
-    <div class="update-ts">
-      Showing ${Math.min(trades.length, 50)} of ${trades.length} matched CLOB trades ${whaleNote}
-      · Whale threshold: $${WHALE_THRESHOLD_USDC} USDC · click wallet to track on PolygonScan
-    </div>`;
+    <div class="update-ts">${Math.min(trades.length,50)} of ${trades.length} trades${whaleNote} · click wallet to track on PolygonScan</div>`;
 }
 
 // ─────────────────────────────────────────────────────────
-//  STEP 3 — BLOCKCHAIN TRACKING PANEL
-//  Shows PolygonScan links for: condition ID, CTF contracts,
-//  and top wallets seen in CLOB trades
+//  BLOCKCHAIN TRACKING PANEL  (Step 3 from PDF)
+//  Shows PolygonScan links for condition ID, CTF contracts,
+//  CLOB API endpoint, and top wallets from matched trades
 // ─────────────────────────────────────────────────────────
 function renderChainTracking() {
   const el = document.getElementById('chain-tracking-wrap');
@@ -4689,21 +4641,19 @@ function renderChainTracking() {
 
   const cid = currentConditionId;
 
-  // Build wallet frequency map from CLOB trade history
+  // Build wallet leaderboard from CLOB trade history
   const walletMap = {};
   clobTradeHistory.forEach(t => {
-    const addr = t.maker_address || t.taker_address;
+    const addr = t.maker_address;
     if (!addr) return;
     if (!walletMap[addr]) walletMap[addr] = { count: 0, vol: 0 };
     walletMap[addr].count++;
-    walletMap[addr].vol += parseFloat(t.price || 0) * parseFloat(t.size || 0);
+    walletMap[addr].vol += parseFloat(t.price||0) * parseFloat(t.size||0);
   });
-
   const topWallets = Object.entries(walletMap)
     .sort((a, b) => b[1].vol - a[1].vol)
     .slice(0, 10);
 
-  // PolygonScan links
   const cidRow = cid ? `
     <div class="chain-track-row">
       <span class="chain-track-lbl">Condition ID</span>
@@ -4718,38 +4668,47 @@ function renderChainTracking() {
       <a class="polyscan-btn" href="https://polygonscan.com/address/${addr}#events" target="_blank" rel="noopener">Events Log</a>
     </div>`).join('');
 
+  const tokenId = currentTokenIds[0] || '';
+  const clobRow = `
+    <div class="chain-track-row" style="background:rgba(9,105,218,.03)">
+      <span class="chain-track-lbl">CLOB Trades</span>
+      <span class="chain-track-val" style="font-size:.62rem">clob.polymarket.com/trades?token_id=${tokenId.slice(0,16)}…</span>
+      <a class="polyscan-btn" href="${CLOB_API}/trades?token_id=${tokenId}&limit=50" target="_blank" rel="noopener"
+         style="background:rgba(0,135,90,.08);border-color:rgba(0,135,90,.28);color:var(--green)">Open API ↗</a>
+    </div>`;
+
   const walletsHtml = topWallets.length ? `
-    <div class="chain-track-row" style="flex-direction:column;align-items:flex-start;gap:6px;padding-bottom:0">
-      <span class="chain-track-lbl" style="margin-bottom:2px">Top Wallets <span style="font-size:.58rem;font-weight:400">(by volume from CLOB trades)</span></span>
+    <div class="chain-track-row" style="flex-direction:column;align-items:flex-start;gap:4px;padding-bottom:0">
+      <span class="chain-track-lbl">Top Wallets <span style="font-size:.58rem;font-weight:400">(by USDC volume from CLOB trades)</span></span>
     </div>
     <div class="chain-track-wallets">
       ${topWallets.map(([addr, info]) => `
         <div class="wallet-row">
-          <a class="wallet-addr" href="https://polygonscan.com/address/${addr}" target="_blank" rel="noopener" title="Track on PolygonScan">${addr.slice(0,8)}…${addr.slice(-6)}</a>
+          <a class="wallet-addr" href="https://polygonscan.com/address/${addr}" target="_blank" rel="noopener"
+             title="View ${addr} on PolygonScan">${addr.slice(0,8)}…${addr.slice(-6)}</a>
           <span class="wallet-vol">$${info.vol < 1000 ? info.vol.toFixed(0) : (info.vol/1000).toFixed(1)+'k'}</span>
           <span class="wallet-count">${info.count} trade${info.count>1?'s':''}</span>
           <a class="polyscan-btn" href="https://polygonscan.com/address/${addr}" target="_blank" rel="noopener">Track ↗</a>
-        </div>
-      `).join('')}
-    </div>` : `<div class="chain-track-note">Load a market and wait for CLOB trades to appear — wallet addresses will be listed here for PolygonScan tracking.</div>`;
+        </div>`).join('')}
+    </div>`
+    : `<div class="chain-track-note">Wallet addresses will appear here once CLOB trades load — they'll be ranked by volume for easy smart-money spotting.</div>`;
 
   el.innerHTML = `
     <div class="chain-track-panel">
       ${cidRow}
       ${contractRows}
-      <div class="chain-track-row" style="background:rgba(9,105,218,.03)">
-        <span class="chain-track-lbl">CLOB Trades</span>
-        <span class="chain-track-val">clob.polymarket.com/trades?market=<wbr>${cid ? cid.slice(0,12)+'…' : '(no condition ID yet)'}</span>
-        ${cid ? `<a class="polyscan-btn" href="${CLOB_API}/trades?market=${cid}" target="_blank" rel="noopener" style="--blue:#00875a;background:rgba(0,135,90,.08);border-color:rgba(0,135,90,.28);color:var(--green)">Open API ↗</a>` : ''}
-      </div>
+      ${clobRow}
       ${walletsHtml}
       <div class="chain-track-note">
-        💡 <b>Smart money tracking (Step 3):</b> Click any wallet to open it on PolygonScan and inspect entry price patterns, timing before events, and token transfer history. 
-        Wallets with large volumes appearing early are indicators of informed trading.
+        💡 <b>Smart money tracking (Step 3):</b> Click any wallet to open PolygonScan and inspect entry price patterns,
+        timing before events, and token transfer history. Large-volume wallets entering early are signals of informed trading.
       </div>
     </div>`;
 }
 
+// ─────────────────────────────────────────────────────────
+//  INIT
+// ─────────────────────────────────────────────────────────
 loadHistory();
 renderHistory();
 
