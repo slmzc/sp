@@ -709,9 +709,260 @@ tbody td{padding:6px 12px;white-space:nowrap;vertical-align:middle}
 .pos-result-val.loss{color:var(--red)}
 .pos-calc-note{font-size:.65rem;color:var(--muted);line-height:1.5;margin-top:8px}
 
-/* ── Settings panel multi-row ── */
-.ob-settings-row + .ob-settings-row{
+/* ══════════════════════════════════════════
+   LIVE MATCH PANEL
+   ══════════════════════════════════════════ */
+.match-panel{
+  background:var(--panel);border:1px solid var(--border);border-radius:6px;
+  overflow:hidden;margin-bottom:10px;
+}
+.match-panel-header{
+  display:flex;align-items:center;gap:10px;
+  padding:8px 14px;
+  background:var(--faint);border-bottom:1px solid var(--border);
+  cursor:pointer;user-select:none;
+}
+.match-panel-header:hover{background:#eaecf0}
+.mp-sport-icon{font-size:1rem;flex-shrink:0}
+.mp-title{font-family:var(--mono);font-size:.72rem;font-weight:700;color:var(--text);flex:1}
+.mp-league{font-family:var(--mono);font-size:.63rem;color:var(--muted)}
+.mp-live-dot{
+  width:7px;height:7px;border-radius:50%;background:var(--red);flex-shrink:0;
+  animation:mpPulse 1.4s ease-in-out infinite;
+}
+@keyframes mpPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+.mp-collapse-arrow{font-size:.7rem;color:var(--muted);flex-shrink:0;transition:transform .2s}
+.match-panel.collapsed .mp-collapse-arrow{transform:rotate(-90deg)}
+.match-panel.collapsed .match-panel-body{display:none}
+
+.match-panel-body{padding:12px 14px}
+
+/* ── Scoreboard row ── */
+.mp-scoreboard{
+  display:grid;grid-template-columns:1fr auto 1fr;
+  gap:10px;align-items:center;
+  margin-bottom:12px;
+}
+.mp-team{display:flex;flex-direction:column;gap:3px}
+.mp-team.right{align-items:flex-end;text-align:right}
+.mp-team-name{
+  font-family:var(--mono);font-size:.82rem;font-weight:700;
+  color:var(--text);letter-spacing:.04em;text-transform:uppercase;
+}
+.mp-team.left  .mp-team-name{color:var(--green)}
+.mp-team.right .mp-team-name{color:var(--red)}
+.mp-team-full{font-size:.65rem;color:var(--muted);font-family:var(--sans)}
+.mp-series-score{
+  display:flex;align-items:center;gap:8px;
+  font-family:var(--mono);font-weight:700;font-size:2rem;
+  color:var(--text);
+}
+.mp-series-score .s1{color:var(--green)}
+.mp-series-score .sep{color:var(--muted);font-size:1.2rem;font-weight:400}
+.mp-series-score .s2{color:var(--red)}
+.mp-status-chip{
+  font-family:var(--mono);font-size:.6rem;font-weight:700;
+  letter-spacing:.1em;padding:2px 7px;border-radius:2px;
+  text-align:center;margin-bottom:4px;
+}
+.mp-status-chip.live    {background:var(--red);color:#fff}
+.mp-status-chip.final   {background:var(--muted);color:#fff}
+.mp-status-chip.upcoming{background:var(--blue);color:#fff}
+.mp-bo{font-family:var(--mono);font-size:.6rem;color:var(--muted);text-align:center}
+
+/* ── Games timeline ── */
+.mp-games{display:flex;flex-direction:column;gap:6px}
+.mp-game-row{
+  display:grid;grid-template-columns:1fr auto 1fr;
+  align-items:center;gap:8px;
+  padding:7px 10px;border-radius:4px;
+  background:var(--faint);border:1px solid var(--border);
+  position:relative;
+}
+.mp-game-row.live-game{
+  border-color:rgba(201,40,62,.4);
+  background:rgba(201,40,62,.04);
+  animation:gameRowPulse 2s ease-in-out infinite;
+}
+@keyframes gameRowPulse{0%,100%{border-color:rgba(201,40,62,.3)}50%{border-color:rgba(201,40,62,.7)}}
+.mp-game-row.won-left {border-left:3px solid var(--green)}
+.mp-game-row.won-right{border-left:3px solid var(--red)}
+.mp-game-num{
+  position:absolute;top:4px;left:50%;transform:translateX(-50%);
+  font-family:var(--mono);font-size:.52rem;color:var(--muted);
+  letter-spacing:.08em;white-space:nowrap;
+}
+.mp-map-name{
+  font-family:var(--mono);font-size:.65rem;font-weight:700;
+  color:var(--muted);text-transform:uppercase;letter-spacing:.06em;
+  text-align:center;margin-top:10px;
+}
+.mp-game-score{
+  font-family:var(--mono);font-size:1.05rem;font-weight:700;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  margin-top:6px;
+}
+.mp-game-score .gs1{color:var(--green)}
+.mp-game-score .gsp{color:var(--muted);font-size:.75rem;font-weight:400}
+.mp-game-score .gs2{color:var(--red)}
+.mp-game-left{display:flex;flex-direction:column;align-items:flex-start;gap:2px}
+.mp-game-right{display:flex;flex-direction:column;align-items:flex-end;gap:2px}
+.mp-game-team{font-family:var(--mono);font-size:.65rem;font-weight:700;text-transform:uppercase}
+.mp-game-left  .mp-game-team{color:var(--green)}
+.mp-game-right .mp-game-team{color:var(--red)}
+.mp-game-sub{font-family:var(--mono);font-size:.58rem;color:var(--muted)}
+
+/* ── Live game detail bar (CS2 rounds etc.) ── */
+.mp-live-detail{
+  margin-top:10px;padding:8px 10px;border-radius:4px;
+  background:rgba(201,40,62,.05);border:1px solid rgba(201,40,62,.2);
+}
+.mp-live-detail-title{
+  font-family:var(--mono);font-size:.58rem;font-weight:700;
+  letter-spacing:.1em;color:var(--red);text-transform:uppercase;margin-bottom:5px;
+}
+.mp-live-stats{display:flex;gap:14px;flex-wrap:wrap}
+.mp-live-stat{display:flex;flex-direction:column;gap:1px}
+.mp-live-stat-lbl{font-family:var(--mono);font-size:.56rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.mp-live-stat-val{font-family:var(--mono);font-size:.78rem;font-weight:700;color:var(--text)}
+
+/* ── Compact game timeline tiles ── */
+.mp-game-timeline{
+  display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;
+}
+.mp-gtile{
+  display:flex;flex-direction:column;align-items:center;gap:2px;
+  padding:6px 10px;border-radius:5px;border:1px solid var(--border);
+  min-width:52px;flex:1;max-width:80px;
+  font-family:var(--mono);text-align:center;
+}
+.gtile-num{font-size:.58rem;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.gtile-status{font-size:.75rem;color:var(--muted)}
+.gtile-winner{font-size:.62rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin-top:1px}
+.gtile-pending{background:var(--faint);opacity:.55}
+.gtile-live{
+  background:rgba(201,40,62,.06);border-color:rgba(201,40,62,.35);
+  animation:gameRowPulse 2s ease-in-out infinite;
+}
+.gtile-left{background:rgba(0,135,90,.07);border-color:rgba(0,135,90,.3)}
+.gtile-left  .gtile-winner{color:var(--green)}
+.gtile-right{background:rgba(201,40,62,.07);border-color:rgba(201,40,62,.3)}
+.gtile-right .gtile-winner{color:var(--red)}
+.gtile-done{background:var(--faint)}
+
+/* ── Polymarket odds dual bar ── */
+.mp-odds-bar{
+  margin-bottom:10px;
+}
+.mp-odds-row{
+  display:flex;align-items:center;gap:8px;margin-bottom:4px;
+}
+.mp-odds-teams{
+  display:flex;justify-content:space-between;
+  font-family:var(--mono);font-size:.68rem;font-weight:700;
+  margin-bottom:3px;
+}
+.mp-odds-t1{color:var(--green)}
+.mp-odds-t2{color:var(--red)}
+.mp-odds-track{
+  flex:1;height:8px;border-radius:4px;overflow:hidden;
+  display:flex;background:var(--faint);
+}
+.mp-odds-fill-1{background:var(--green);transition:width .4s}
+.mp-odds-fill-2{background:var(--red);transition:width .4s}
+.mp-odds-pct1{font-family:var(--mono);font-size:.72rem;font-weight:700;color:var(--green);white-space:nowrap;min-width:38px}
+.mp-odds-pct2{font-family:var(--mono);font-size:.72rem;font-weight:700;color:var(--red);white-space:nowrap;min-width:38px;text-align:right}
+.mp-nodata{
+  font-family:var(--mono);font-size:.68rem;color:var(--muted);
+  text-align:center;padding:12px;font-style:italic;
+}
+
+/* ── Data state notices ── */
+.mp-notice{
+  font-family:var(--mono);font-size:.65rem;line-height:1.45;
+  padding:5px 10px;border-radius:4px;margin-bottom:8px;
+}
+.mp-notice.searching{
+  background:rgba(9,105,218,.06);border:1px solid rgba(9,105,218,.2);color:var(--blue);
+}
+.mp-notice.nopanda{
+  background:rgba(88,96,105,.05);border:1px solid rgba(88,96,105,.15);color:var(--muted);
+}
+.mp-notice.error{
+  background:rgba(201,40,62,.06);border:1px solid rgba(201,40,62,.2);color:var(--red);
+}
+.mp-notice-hint{
+  font-size:.6rem;opacity:.75;display:block;margin-top:2px;
+}
+
+/* ── Polymarket implied odds section ── */
+.mp-pm-section-lbl{
+  font-family:var(--mono);font-size:.62rem;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:6px;margin-top:4px;
+}
+.mp-pm-markets{
+  display:flex;flex-direction:column;gap:4px;margin-bottom:8px;
+}
+.mp-pm-row{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:5px 10px;border-radius:3px;
+  background:var(--faint);border:1px solid var(--border);
+}
+.mp-pm-label{
+  font-family:var(--sans);font-size:.72rem;color:var(--text);
+  flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.mp-pm-pct{
+  font-family:var(--mono);font-size:.78rem;font-weight:700;flex-shrink:0;
+}
+.mp-pm-vol{
+  font-family:var(--mono);font-size:.63rem;color:var(--muted);
+  margin-bottom:4px;
+}
+.mp-refresh-ts{
+  font-family:var(--mono);font-size:.58rem;color:var(--muted);
+  text-align:right;margin-top:8px;opacity:.7;
+}
+
+/* sport color accents */
+.match-panel[data-sport="cs2"]      .mp-team.left  .mp-team-name{color:#e84057}
+.match-panel[data-sport="cs2"]      .mp-team.right .mp-team-name{color:#5b8dd9}
+.match-panel[data-sport="valorant"] .mp-team.left  .mp-team-name{color:#ff4655}
+.match-panel[data-sport="valorant"] .mp-team.right .mp-team-name{color:#5b8dd9}
+.match-panel[data-sport="hok"]      .mp-team.left  .mp-team-name{color:#c89b3c}
+.match-panel[data-sport="hok"]      .mp-team.right .mp-team-name{color:#b87d2a}
   margin-top:10px;padding-top:10px;border-top:1px solid var(--border);
+}
+
+/* ── API Key input row ── */
+.api-key-row{display:flex;gap:6px;align-items:center;margin-top:6px}
+.api-key-input{
+  flex:1;font-family:var(--mono);font-size:.7rem;
+  border:1px solid var(--border2);border-radius:3px;
+  padding:5px 9px;outline:none;background:var(--faint);color:var(--text);
+  transition:border-color .15s;
+}
+.api-key-input:focus{border-color:var(--blue);box-shadow:0 0 0 2px rgba(9,105,218,.08)}
+.api-key-input::placeholder{color:var(--muted);font-size:.65rem}
+.api-key-save{
+  font-family:var(--mono);font-size:.65rem;font-weight:700;
+  background:var(--blue);color:#fff;border:none;border-radius:3px;
+  padding:5px 11px;cursor:pointer;flex-shrink:0;
+  transition:background .15s;
+}
+.api-key-save:hover{background:#0550ae}
+.api-key-status{
+  font-family:var(--mono);font-size:.6rem;color:var(--muted);margin-top:3px;
+}
+.api-key-status.ok{color:var(--green)}
+.api-key-status.err{color:var(--red)}
+.api-key-link{font-size:.63rem;color:var(--blue);text-decoration:underline;cursor:pointer}
+.esport-badges{display:flex;gap:4px;flex-wrap:wrap;margin-top:5px}
+.esport-badge{
+  font-family:var(--mono);font-size:.58rem;font-weight:700;
+  padding:1px 6px;border-radius:2px;letter-spacing:.04em;
+  border:1px solid currentColor;opacity:.7;
 }
 
 /* ═══════════════════════════════════════════
@@ -892,6 +1143,86 @@ tbody td{padding:6px 12px;white-space:nowrap;vertical-align:middle}
 @media(max-width:899px){
   .mobile-history-bar.has-items{display:flex}
 }
+
+/* ══════════════════════════════════════════
+   CLOB MATCHED TRADES — Step 1+2 from PDF
+   ══════════════════════════════════════════ */
+
+/* Volume spike alert banner */
+.vol-spike-alert{
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  padding:8px 14px;border-radius:4px;margin-bottom:8px;
+  background:rgba(180,83,9,.08);border:1px solid rgba(180,83,9,.35);
+  font-family:var(--mono);font-size:.72rem;
+  animation:saSlide .25s ease;
+}
+.vol-spike-badge{
+  font-size:.58rem;font-weight:700;letter-spacing:.1em;
+  padding:1px 6px;border-radius:2px;
+  background:var(--yellow);color:#fff;flex-shrink:0;
+}
+.vol-spike-label{font-weight:700;color:var(--yellow)}
+.vol-spike-detail{color:var(--muted);font-size:.65rem;flex:1}
+
+/* Whale badge on CLOB trade rows */
+.clob-trade-whale td:first-child::before{
+  content:'🐋 ';font-size:.62rem;
+}
+.clob-trade-whale{
+  background:rgba(180,83,9,.05) !important;
+  border-left:3px solid var(--yellow) !important;
+}
+.clob-trade-whale:hover{background:rgba(180,83,9,.1) !important}
+
+/* ── Blockchain Tracking panel — Step 3 ── */
+.chain-track-panel{
+  background:var(--panel);border:1px solid var(--border);border-radius:5px;
+  overflow:hidden;
+}
+.chain-track-row{
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+  padding:9px 14px;border-bottom:1px solid var(--border);
+  font-family:var(--mono);font-size:.72rem;
+}
+.chain-track-row:last-child{border-bottom:none}
+.chain-track-lbl{
+  color:var(--muted);font-size:.63rem;text-transform:uppercase;
+  letter-spacing:.06em;flex-shrink:0;min-width:90px;
+}
+.chain-track-val{
+  color:var(--text);word-break:break-all;flex:1;
+  font-size:.68rem;
+}
+.polyscan-btn{
+  font-family:var(--mono);font-size:.62rem;font-weight:700;
+  background:rgba(9,105,218,.08);color:var(--blue);
+  border:1px solid rgba(9,105,218,.28);border-radius:3px;
+  padding:3px 9px;cursor:pointer;text-decoration:none;
+  transition:all .15s;white-space:nowrap;flex-shrink:0;
+  display:inline-flex;align-items:center;gap:4px;
+}
+.polyscan-btn:hover{background:rgba(9,105,218,.16);color:var(--blue)}
+.polyscan-btn::before{content:'⛓';font-size:.7rem}
+.chain-track-note{
+  font-family:var(--mono);font-size:.65rem;color:var(--muted);
+  padding:10px 14px;line-height:1.6;
+}
+.chain-track-wallets{
+  max-height:220px;overflow-y:auto;
+  scrollbar-width:thin;scrollbar-color:var(--border2) transparent;
+}
+.chain-track-wallets::-webkit-scrollbar{width:4px}
+.chain-track-wallets::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+.wallet-row{
+  display:flex;align-items:center;gap:10px;
+  padding:6px 14px;border-bottom:1px solid var(--border);
+  font-family:var(--mono);font-size:.68rem;
+}
+.wallet-row:last-child{border-bottom:none}
+.wallet-addr{color:var(--text);flex:1;cursor:pointer;}
+.wallet-addr:hover{color:var(--blue);text-decoration:underline}
+.wallet-count{font-size:.62rem;color:var(--muted);flex-shrink:0}
+.wallet-vol{font-size:.65rem;font-weight:700;color:var(--yellow);flex-shrink:0}
 </style>
 </head>
 <body>
@@ -979,6 +1310,34 @@ tbody td{padding:6px 12px;white-space:nowrap;vertical-align:middle}
         <div class="ob-settings-desc">Warn when the book is unchanged for 4+ consecutive ticks — may indicate a closed or frozen market.</div>
       </div>
       <button class="toggle" id="stale-alert-toggle" onclick="toggleStaleAlert()" title="Enable stale book detector"></button>
+    </div>
+
+    <!-- PandaScore Esports API key row -->
+    <div class="ob-settings-row">
+      <div class="ob-settings-info" style="width:100%">
+        <div class="ob-settings-name">🎮 Esports Live Data — PandaScore API Key</div>
+        <div class="ob-settings-desc">
+          Unlocks live series scores for <b style="color:#e84057">CS2</b>, <b style="color:#ff4655">Valorant</b>, <b style="color:#c89b3c">Honor of Kings</b>, <b style="color:#785a28">Dota 2</b>, and more — data Polymarket doesn't expose. Free key at
+          <a class="api-key-link" href="https://pandascore.co" target="_blank" rel="noopener">pandascore.co</a> (no credit card).
+        </div>
+        <div class="esport-badges">
+          <span class="esport-badge" style="color:#e84057">CS2</span>
+          <span class="esport-badge" style="color:#ff4655">VALORANT</span>
+          <span class="esport-badge" style="color:#c89b3c">HOK</span>
+          <span class="esport-badge" style="color:#785a28">DOTA 2</span>
+          <span class="esport-badge" style="color:var(--blue)">PUBG</span>
+          <span class="esport-badge" style="color:#f99e1a">OVERWATCH</span>
+          <span class="esport-badge" style="color:var(--green)">R6</span>
+          <span class="esport-badge" style="color:var(--muted)">+ more</span>
+        </div>
+        <div class="api-key-row">
+          <input class="api-key-input" id="panda-key-input" type="password"
+            placeholder="paste your PandaScore API token here"
+            oninput="pandaKeyInputChange()" autocomplete="off"/>
+          <button class="api-key-save" onclick="savePandaKey()">Save</button>
+        </div>
+        <div class="api-key-status" id="panda-key-status"></div>
+      </div>
     </div>
   </div>
 </div>
@@ -1068,6 +1427,9 @@ tbody td{padding:6px 12px;white-space:nowrap;vertical-align:middle}
       <div class="outcome-tabs" id="outcome-tabs"></div>
     </div>
 
+    <!-- Live Match Intelligence Panel -->
+    <div id="match-panel-wrap"></div>
+
     <!-- Implied Probability Bar (auto-shown when ≥2 tokens) -->
     <div id="prob-bar-container"></div>
 
@@ -1097,6 +1459,16 @@ tbody td{padding:6px 12px;white-space:nowrap;vertical-align:middle}
 
     <!-- On-chain fills -->
     <div class="section-header" style="margin-top:20px">
+      <div class="section-label">CLOB Matched Trades</div>
+      <div class="section-line"></div>
+      <div class="section-tag tag-live">LIVE</div>
+    </div>
+    <div id="vol-spike-wrap"></div>
+    <div id="clob-trades-wrap">
+      <div class="loader"><div class="spinner"></div> Fetching CLOB trades…</div>
+    </div>
+
+    <div class="section-header" style="margin-top:20px">
       <div class="section-label">On-Chain Trade Fills</div>
       <div class="section-line"></div>
       <div class="section-tag tag-chain">POLYGON</div>
@@ -1109,6 +1481,16 @@ tbody td{padding:6px 12px;white-space:nowrap;vertical-align:middle}
       <b>ℹ How this works:</b> Polymarket's orderbook is <b>off-chain</b> (CLOB server). This tool queries the raw CLOB API directly at
       <code>clob.polymarket.com</code> — bypassing their UI. On-chain fills come from Polygon RPC logs on the
       <b>CTF Exchange contract</b>. Pending orders that haven't been matched yet only exist in the CLOB, not on-chain.
+    </div>
+
+    <!-- Blockchain Tracking — Step 3 from PDF guide -->
+    <div class="section-header" style="margin-top:20px">
+      <div class="section-label">Blockchain Tracking</div>
+      <div class="section-line"></div>
+      <div class="section-tag tag-chain">POLYGONSCAN</div>
+    </div>
+    <div id="chain-tracking-wrap">
+      <div class="ob-empty" style="padding:20px">Load a market to see PolygonScan tracking links.</div>
     </div>
 
   </div><!-- /market-data -->
@@ -1133,16 +1515,26 @@ tbody td{padding:6px 12px;white-space:nowrap;vertical-align:middle}
 //  CONFIG
 // ─────────────────────────────────────────────────────────
 const GAMMA_API  = 'https://gamma-api.polymarket.com';
-const PROXY_URL  = 'https://api.allorigins.win/raw?url=';
 const CLOB_API   = 'https://clob.polymarket.com';
-// Multiple public Polygon RPCs — tried in order until one succeeds
+
+// CORS proxies — tried in sequence until one works.
+// All of these set Access-Control-Allow-Origin: * and work from file:// (null origin).
+const CORS_PROXIES = [
+  url => `https://corsproxy.io/?url=${encodeURIComponent(url)}`,
+  url => `https://api.cors.lol/?url=${encodeURIComponent(url)}`,
+  url => `https://cors-proxy.fringe.zone/${url}`,
+  url => `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(url)}`,
+  url => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+];
+
+// Polygon RPCs with permissive CORS — work from file:// (null origin)
 const POLY_RPCS = [
-  'https://polygon.llamarpc.com',
-  'https://polygon-mainnet.public.blastapi.io',
+  'https://polygon-bor-rpc.publicnode.com',
+  'https://polygon.drpc.org',
+  'https://rpc.ankr.com/polygon',
+  'https://polygon-mainnet.g.alchemy.com/v2/demo',
   'https://1rpc.io/matic',
   'https://polygon-rpc.com',
-  'https://rpc-mainnet.matic.quiknode.pro',
-  'https://polygon-pokt.nodies.app',
 ];
 // Polymarket uses TWO CTF Exchange contracts on Polygon:
 //   1. Standard CTF Exchange (most markets)
@@ -1157,6 +1549,7 @@ let currentMarket     = null;
 let currentTokenId    = null;
 let currentTokenIds   = [];
 let currentTokenNames = [];
+let currentConditionId = null;   // Step 1: stored for CLOB trades + blockchain tracking
 let autoTimer         = null;
 let autoOn            = false;
 let showAllOutcomes   = false;
@@ -1276,9 +1669,14 @@ function extractSlugs(url) {
     const u = new URL(url.trim());
     const parts = u.pathname.replace(/^\/+|\/+$/g,'').split('/').filter(Boolean);
     if (parts.length === 0) return null;
-    // Filter out known non-slug path prefixes
-    const skip = new Set(['event','sports','politics','crypto','culture','tech','science']);
-    // Return all meaningful segments, most-specific (last) first
+    // Filter out known non-slug path prefixes (categories and sport names)
+    const skip = new Set([
+      'event','sports','politics','crypto','culture','tech','science',
+      // sport category segments that appear in Polymarket URLs
+      'nba','nfl','nhl','mlb','soccer','football','basketball',
+      'honor-of-kings','league-of-legends','counter-strike','valorant','dota-2','pubg',
+      'esports','gaming'
+    ]);
     const meaningful = parts.filter(p => !skip.has(p));
     if (meaningful.length === 0) meaningful.push(parts[parts.length - 1]);
     return [...new Set([...meaningful].reverse())];
@@ -1293,24 +1691,44 @@ const diagLog = []; // diagnostic log of all API calls
 async function fetchJSON(originalUrl, tag) {
   const entry = { url: originalUrl, tag, status: null, count: null, error: null };
   diagLog.push(entry);
-  try {
-    let r;
-    if (originalUrl.startsWith(GAMMA_API)) {
-      const proxyUrl = PROXY_URL + encodeURIComponent(originalUrl);
-      r = await fetch(proxyUrl, { headers:{ 'Accept':'application/json' } });
-    } else {
-      r = await fetch(originalUrl, { headers:{ 'Accept':'application/json' } });
+
+  const needsProxy = originalUrl.startsWith(GAMMA_API);
+
+  // For non-Gamma URLs (CLOB etc.), try direct — those allow CORS from all origins
+  // For Gamma, go straight to proxies (direct always fails from file://)
+  const attempts = needsProxy
+    ? CORS_PROXIES.map(fn => fn(originalUrl))
+    : [originalUrl, ...CORS_PROXIES.map(fn => fn(originalUrl))];
+
+  let lastErr = null;
+  for (const proxyUrl of attempts) {
+    try {
+      const ctrl  = new AbortController();
+      const timer = setTimeout(() => ctrl.abort(), 9000);
+      const r = await fetch(proxyUrl, {
+        headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+        signal: ctrl.signal,
+      });
+      clearTimeout(timer);
+      if (!r.ok) { lastErr = new Error(`HTTP ${r.status}`); continue; }
+      const text = await r.text();
+      if (!text || text.trim() === '') { lastErr = new Error('Empty response'); continue; }
+      const d = JSON.parse(text);
+      // Some proxies wrap response: { contents: "..." }
+      const unwrapped = (d && typeof d.contents === 'string') ? JSON.parse(d.contents) : d;
+      const arr = Array.isArray(unwrapped) ? unwrapped : (unwrapped.markets || unwrapped.events || unwrapped.data || []);
+      entry.status = r.status;
+      entry.count  = arr.length;
+      return unwrapped;
+    } catch(e) {
+      lastErr = e;
+      // Brief pause before next proxy to avoid hammering
+      await new Promise(res => setTimeout(res, 200));
     }
-    entry.status = r.status;
-    if (!r.ok) { entry.error = `HTTP ${r.status}`; throw new Error(`HTTP ${r.status} – ${originalUrl}`); }
-    const d = await r.json();
-    const arr = Array.isArray(d) ? d : (d.markets || d.events || d.data || []);
-    entry.count = arr.length;
-    return d;
-  } catch(e) {
-    if (!entry.error) entry.error = e.message;
-    throw e;
   }
+
+  entry.error = lastErr?.message || 'All proxies failed';
+  throw lastErr || new Error('All proxies failed');
 }
 
 function renderDiag() {
@@ -1454,9 +1872,17 @@ async function loadMarket() {
         );
       }
 
+      // Handle array response (query endpoint) OR single object (slug path endpoint)
+      let mArr = null;
       if (Array.isArray(d) && d.length > 0) {
-        markets = d;
-        event = null; // single market, no event
+        mArr = d;
+      } else if (d && !Array.isArray(d) && (d.conditionId || d.question || d.clobTokenIds || d.clob_token_ids)) {
+        mArr = [d]; // single market object returned directly
+      }
+
+      if (mArr) {
+        markets = mArr;
+        event = null; // single market, no event wrapper
         found = true;
         break;
       }
@@ -1473,6 +1899,25 @@ async function loadMarket() {
       document.getElementById('empty-state').style.display = 'none';
       setStatus('idle', 'Not found');
       return;
+    }
+
+    // ── If we found a market but no event, try to backfill the parent event ──
+    // This gets sibling markets (all outcomes) and the event title
+    if (!event && markets.length > 0) {
+      const m0 = markets[0];
+      const evId = m0.eventId || m0.event_id;
+      const evSlug = m0.eventSlug || m0.event_slug;
+      if (evId || evSlug) {
+        const backfillUrl = evId
+          ? `${GAMMA_API}/events?id=${evId}`
+          : `${GAMMA_API}/events?slug=${encodeURIComponent(evSlug)}`;
+        const evData = await tryFetchRaw(backfillUrl, `GAMMA event backfill (id=${evId||evSlug})`);
+        const evArr = toArr(evData);
+        if (evArr.length > 0 && evArr[0].markets?.length > 0) {
+          event = evArr[0];
+          markets = event.markets; // use all sibling markets for full context
+        }
+      }
     }
 
     currentMarket = markets;
@@ -1518,7 +1963,19 @@ async function loadMarket() {
     await loadOrderbook(defaultMarket);
 
   } catch(e) {
-    setError(e.message || String(e));
+    const msg = e.message || String(e);
+    // Detect CORS / null-origin failures and give a helpful hint
+    const isCors = msg.toLowerCase().includes('cors') || msg.toLowerCase().includes('blocked')
+      || msg.toLowerCase().includes('failed to fetch') || msg.toLowerCase().includes('networkerror')
+      || msg.toLowerCase().includes('all proxies');
+    const corsHint = isCors ? `
+      <div style="margin-top:10px;padding:8px 12px;border-radius:4px;background:rgba(9,105,218,.06);border:1px solid rgba(9,105,218,.2);font-size:.72rem;line-height:1.6">
+        <b style="color:var(--blue)">💡 Running from a local file?</b><br>
+        Open a terminal in the same folder and run:<br>
+        <code style="background:var(--faint);padding:2px 6px;border-radius:3px;font-size:.7rem">python -m http.server 8080</code><br>
+        Then open <code style="background:var(--faint);padding:2px 6px;border-radius:3px;font-size:.7rem">http://localhost:8080/index1.html</code> in your browser.
+      </div>` : '';
+    setError(msg + corsHint);
     setStatus('idle', 'Error');
   } finally {
     setLoading(false);
@@ -1558,6 +2015,10 @@ async function loadOrderbook(market) {
     throw new Error('No CLOB token IDs found for this market. It may be resolved or not yet active.');
   }
 
+  // Store condition ID — needed for CLOB trades endpoint (Step 1)
+  const cid = market.conditionId || market.condition_id;
+  if (cid) currentConditionId = cid;
+
   // Collect outcome names for each token
   currentTokenIds   = tokenIds;
   currentTokenNames = getOutcomeNames(market, tokenIds);
@@ -1570,6 +2031,14 @@ async function loadOrderbook(market) {
   panicSnapshots = {};
   panicEventLog  = [];
   panicBannerDismissed = false;
+  clobTradeHistory = [];  // Step 1+2: reset CLOB trade buffer
+  // Reset CLOB trades + chain tracking panels
+  const clobEl = document.getElementById('clob-trades-wrap');
+  if (clobEl) clobEl.innerHTML = '<div class="loader"><div class="spinner"></div> Fetching CLOB trades…</div>';
+  const volEl = document.getElementById('vol-spike-wrap');
+  if (volEl) volEl.innerHTML = '';
+  const chainEl = document.getElementById('chain-tracking-wrap');
+  if (chainEl) chainEl.innerHTML = '<div class="ob-empty" style="padding:20px">Load a market to see PolygonScan tracking links.</div>';
   document.getElementById('panic-banner').classList.remove('show');
   // Reset smart alerts on new market load
   smartAlerts = [];
@@ -1587,8 +2056,10 @@ async function loadOrderbook(market) {
 
   await Promise.all([
     refreshOrderbook(),
-    fetchOnChainFills(tokenIds)
+    fetchOnChainFills(tokenIds),
+    fetchCLOBTrades()           // Step 1+2: matched trades + pattern detection
   ]);
+  renderChainTracking();         // Step 3: PolygonScan tracking links
 }
 
 // Extract outcome names aligned to tokenIds order
@@ -2017,7 +2488,10 @@ function renderMarketBanner(info) {
 
   // Condition ID
   const cid = info.conditionId || info.condition_id;
-  if (cid) chips.push(`<div class="m-chip"><span>Condition</span><b style="font-size:.58rem">${cid.slice(0,10)}…</b></div>`);
+  if (cid) {
+    currentConditionId = cid; // ← Step 1: store globally for CLOB trades fetch
+    chips.push(`<div class="m-chip"><span>Condition</span><b style="font-size:.58rem">${cid.slice(0,10)}…</b></div>`);
+  }
 
   document.getElementById("m-meta").innerHTML = chips.join("");
 }
@@ -2694,6 +3168,7 @@ function toggleOBSettings() {
   const btn   = document.getElementById('ob-settings-btn');
   const open  = panel.classList.toggle('open');
   btn.classList.toggle('open', open);
+  if (open) loadPandaKeyInput(); // populate key field on open
 }
 
 function toggleAllOutcomes() {
@@ -2719,8 +3194,11 @@ function detectSport(text) {
   const t = text.toLowerCase();
   if (/\blol\b|league of legends|\blck\b|\blcs\b|\blpl\b|\blec\b|\bworlds\b|\bmsi\b/.test(t)) return 'lol';
   if (/\bcs2\b|\bcsgo\b|counter.strike/.test(t)) return 'cs2';
-  if (/\bvalorant\b/.test(t)) return 'valorant';
-  if (/\bdota\b/.test(t)) return 'dota2';
+  if (/\bvalorant\b|\bvct\b|\bvrl\b/.test(t)) return 'valorant';
+  if (/\bdota\b|\bdota2\b|\bti\d{0,2}\b|the international/.test(t)) return 'dota2';
+  // HoK: honor of kings, kpl, rov (realm of valor), hok slug patterns
+  if (/\bhok\b|honor.of.kings|king.pro.league|\bkpl\b|\brov\b|realm.of.valor|hok-ea|hok-he|hok-tw|\brov.pro/.test(t)) return 'hok';
+  if (/\bpubg\b/.test(t)) return 'pubg';
   if (/\bnba\b/.test(t)) return 'nba';
   if (/\bnfl\b/.test(t)) return 'nfl';
   if (/\bnhl\b/.test(t)) return 'nhl';
@@ -2734,6 +3212,11 @@ async function fetchGameState(event, markets) {
   if (!event && (!markets || !markets.length)) return;
   currentEventInfo = { event, markets };
 
+  // Clear stale data from previous market
+  currentPandaRaw   = null;
+  currentPandaSport = null;
+  currentLoLRaw     = null;
+
   const titleText = [
     event?.title || '',
     event?.slug  || '',
@@ -2744,19 +3227,79 @@ async function fetchGameState(event, markets) {
   ].join(' ');
 
   const sport = detectSport(titleText);
-  const teamNames = currentTokenNames.length >= 2 ? currentTokenNames : null;
+  const isPandaSport  = ['cs2','valorant','dota2','hok','pubg'].includes(sport);
+  const isKnownSport  = isPandaSport || sport === 'lol' || ['nba','nfl','nhl','mlb','soccer'].includes(sport);
+
+  // Extract team names directly from markets data (avoids stale currentTokenNames)
+  const teamNames = extractTeamNamesFromMarkets(event, markets);
+
+  // Show panel immediately for all known sports
+  if (isKnownSport) {
+    renderMatchPanelFromPolymarket(event, markets, sport, teamNames, 'searching');
+  } else {
+    const w = document.getElementById('match-panel-wrap');
+    if (w) w.innerHTML = '';
+  }
 
   let state = null;
   try {
     if (sport === 'lol')  state = await fetchLoLState(teamNames);
     else if (['nba','nfl','nhl','mlb'].includes(sport)) state = await fetchESPNState(sport, teamNames);
     else if (sport === 'soccer') state = await fetchESPNState('soccer', teamNames);
-  } catch(e) { /* silently fall through */ }
+    else if (isPandaSport) state = await fetchPandaScoreState(sport, teamNames, titleText);
+  } catch(e) {
+    if (isKnownSport) renderMatchPanelFromPolymarket(event, markets, sport, teamNames, 'error', e.message);
+  }
 
-  // Fallback: derive from game_start_time
+  // Render enriched panel once we have external data
+  if (isPandaSport) {
+    if (currentPandaRaw) {
+      renderMatchPanel(currentPandaRaw, sport);
+    } else {
+      renderMatchPanelFromPolymarket(event, markets, sport, teamNames, 'nopanda');
+    }
+  } else if (sport === 'lol' && currentLoLRaw) {
+    renderMatchPanelLoL(currentLoLRaw, event, markets, teamNames);
+  } else if (isKnownSport && state) {
+    // ESPN sports: render panel from state object + Polymarket odds
+    renderMatchPanelFromState(state, event, markets, sport, teamNames);
+  } else if (isKnownSport) {
+    renderMatchPanelFromPolymarket(event, markets, sport, teamNames, 'nopanda');
+  }
+
   if (!state) state = deriveStateFromTime(event, markets);
-
   renderGameState(state);
+}
+
+// Extract team names from Gamma market objects — avoids reading stale currentTokenNames
+function extractTeamNamesFromMarkets(event, markets) {
+  // 1. Event-level outcomes
+  if (event?.outcomes) {
+    try {
+      const out = typeof event.outcomes === 'string' ? JSON.parse(event.outcomes) : event.outcomes;
+      if (Array.isArray(out) && out.length >= 2 && out[0] !== 'Yes') return out;
+    } catch(e) {}
+  }
+  // 2. Per-market outcomes — each market in a binary series has outcomes:["TeamA","TeamB"] or ["Yes","No"]
+  for (const m of (markets || [])) {
+    try {
+      const out = typeof m.outcomes === 'string' ? JSON.parse(m.outcomes) : m.outcomes;
+      if (Array.isArray(out) && out.length >= 2 && out[0] !== 'Yes' && out[0] !== 'No') return out;
+    } catch(e) {}
+  }
+  // 3. groupItemTitle across sibling markets (each market = one outcome = one team)
+  const titles = (markets || []).map(m => m.groupItemTitle).filter(Boolean);
+  if (titles.length >= 2) return titles.slice(0, 2);
+  // 4. Parse from question "TeamA wins" pattern
+  const names = [];
+  for (const m of (markets || [])) {
+    const q = m.question || '';
+    const w = q.match(/^([^:–\-]+?)\s+(?:wins?|to win)/i);
+    if (w) names.push(w[1].trim());
+  }
+  if (names.length >= 2) return names.slice(0, 2);
+  // 5. Last resort
+  return currentTokenNames.length >= 2 ? currentTokenNames : null;
 }
 
 // ── LoL Esports API ──────────────────────────────────────
@@ -2775,7 +3318,10 @@ async function fetchLoLState(teamNames) {
       : null;
     const fallbackLive = (!match && liveEvents.length) ? liveEvents[0] : null;
     const ev = match || fallbackLive;
-    if (ev) return buildLoLState(ev, 'live');
+    if (ev) {
+      currentLoLRaw = ev;
+      return buildLoLState(ev, 'live');
+    }
   }
 
   // No live match — check schedule for upcoming or recent
@@ -2807,8 +3353,9 @@ async function fetchLoLState(teamNames) {
     const status = mState === 'completed' ? 'final'
       : mState === 'inProgress'           ? 'live'
       : t > now                           ? 'upcoming'
-      : t <= now                          ? 'live'   // started but API hasn't updated
+      : t <= now                          ? 'live'
       : 'upcoming';
+    currentLoLRaw = best;
     return buildLoLState(best, status);
   }
   return null;
@@ -2864,6 +3411,891 @@ function buildLoLState(event, forceStatus) {
   } : null;
 
   return { status: state, label, detail, score, source: 'LoL Esports' };
+}
+
+// ─────────────────────────────────────────────────────────
+//  PANDASCORE ESPORTS API  (CS2 / Valorant / Dota2 / HoK / PUBG / ...)
+//  Free API key at https://pandascore.co — no credit card needed.
+//  Key is stored in localStorage under 'panda_api_key'.
+// ─────────────────────────────────────────────────────────
+
+const PANDA_DEFAULT_KEY = 'dRyztUdNwi-_8RebiAJ_ItCNdOmWi06AOOpXYjq_RQs0xDaU8u4';
+let pandaScoreKey    = localStorage.getItem('panda_api_key') || PANDA_DEFAULT_KEY;
+let currentPandaRaw  = null;   // full raw match object stored for deep render
+let currentPandaSport = null;  // sport slug of current match
+let currentLoLRaw    = null;   // raw LoL event object for panel rendering
+
+function pandaKeyInputChange() {
+  const st = document.getElementById('panda-key-status');
+  if (st) st.textContent = '';
+}
+
+function savePandaKey() {
+  const val = (document.getElementById('panda-key-input')?.value || '').trim();
+  pandaScoreKey = val;
+  localStorage.setItem('panda_api_key', val);
+  const st = document.getElementById('panda-key-status');
+  if (st) {
+    if (val) {
+      st.textContent = '✓ Key saved — will be used for CS2 / Valorant / HoK / Dota2 / PUBG live data.';
+      st.className = 'api-key-status ok';
+    } else {
+      st.textContent = 'Key cleared.';
+      st.className = 'api-key-status';
+    }
+    setTimeout(() => { if (st) st.textContent = ''; }, 4000);
+  }
+}
+
+// Populate key input when settings panel opens
+function loadPandaKeyInput() {
+  const inp = document.getElementById('panda-key-input');
+  if (inp) inp.value = pandaScoreKey;
+}
+
+// PandaScore game slug mapping
+const PANDA_SLUGS = {
+  cs2:      'csgo',
+  valorant: 'valorant',
+  dota2:    'dota2',
+  hok:      'honor-of-kings',
+  pubg:     'pubg',
+};
+
+// ─────────────────────────────────────────────────────────
+//  MATCH PANEL — Polymarket-derived fallback renderer
+//  Shows immediately; enriched by PandaScore when available
+// ─────────────────────────────────────────────────────────
+
+function renderMatchPanelFromPolymarket(event, markets, sport, teamNames, dataState, errMsg) {
+  const wrap = document.getElementById('match-panel-wrap');
+  if (!wrap) return;
+
+  const icon  = SPORT_ICONS[sport]  || '🎮';
+  const label = SPORT_LABELS[sport] || sport?.toUpperCase() || 'ESPORTS';
+
+  // Derive teams from token names
+  const t1name = teamNames?.[0] || '?';
+  const t2name = teamNames?.[1] || '?';
+
+  // Derive series info from market question / title
+  const q      = (event?.title || markets?.[0]?.question || '').replace(/\(BO\d+\)/i,'').trim();
+  const boMatch = (event?.title || markets?.[0]?.question || '').match(/\bBO?(\d+)\b/i);
+  const bestOf  = boMatch ? boMatch[1] : '?';
+  const league  = event?.title?.split(' - ').slice(-1)[0]?.trim()
+               || markets?.[0]?.description?.split(' - ').slice(-1)[0]?.trim()
+               || '';
+
+  // Status — use the same logic as deriveStateFromTime + market active/closed flags
+  const now   = Date.now();
+  // Try every date field Polymarket uses
+  const startRaw = event?.game_start_time || event?.startDate || event?.start_date
+                 || markets?.[0]?.game_start_time || markets?.[0]?.startDate || markets?.[0]?.start_date;
+  const endRaw   = event?.endDate || event?.end_date || event?.endDateIso
+                 || markets?.[0]?.endDate || markets?.[0]?.end_date || markets?.[0]?.end_date_iso;
+  const isActive = event?.active ?? markets?.[0]?.active;
+  const isClosed = event?.closed ?? markets?.[0]?.closed;
+
+  const startMs = startRaw ? new Date(startRaw).getTime() : null;
+  const endMs   = endRaw   ? new Date(endRaw).getTime()   : null;
+
+  let pmStatus = 'upcoming', statusChip = 'UPCOMING';
+
+  // Explicit closed/inactive → final
+  if (isClosed || isActive === false) {
+    pmStatus = 'final'; statusChip = 'FINAL';
+  }
+  // End date in the past → final
+  else if (endMs && endMs < now) {
+    pmStatus = 'final'; statusChip = 'FINAL';
+  }
+  // Started but not ended → live
+  else if (startMs && startMs <= now && (!endMs || endMs > now)) {
+    pmStatus = 'live'; statusChip = '● LIVE';
+  }
+  // Not started yet
+  else if (startMs && startMs > now) {
+    pmStatus = 'upcoming'; statusChip = 'UPCOMING';
+  }
+  // If active flag set and no clear start date, trust it
+  else if (isActive === true) {
+    pmStatus = 'live'; statusChip = '● LIVE';
+  }
+
+  // ── Derive series score + map results from Polymarket sub-markets ──
+  const seriesData = deriveSeriesFromMarkets(markets, t1name, t2name, bestOf);
+
+  let noticeHtml = '';
+  const isEspnSport = ['nba','nfl','nhl','mlb','soccer'].includes(sport);
+  if (dataState === 'searching') {
+    const src = sport === 'lol' ? 'LoL Esports' : isEspnSport ? 'ESPN' : 'PandaScore';
+    noticeHtml = `<div class="mp-notice searching">🔍 Fetching live map data from ${src}…</div>`;
+  } else if (dataState === 'nopanda' && !seriesData.hasMaps) {
+    noticeHtml = `<div class="mp-notice nopanda">📡 No external coverage for this match — map results inferred from Polymarket prices.</div>`;
+  } else if (dataState === 'error') {
+    noticeHtml = `<div class="mp-notice error">⚠️ ${errMsg || 'External data error'}</div>`;
+  }
+
+  const pmOddsHtml = buildPolymarketOddsHtml(markets, t1name, t2name);
+
+  wrap.innerHTML = `
+    <div class="match-panel${mpCollapsed ? ' collapsed' : ''}" id="match-panel-el" data-sport="${sport}">
+      <div class="match-panel-header" onclick="toggleMatchPanel()">
+        <span class="mp-sport-icon">${icon}</span>
+        <span class="mp-title">${label}${league ? ' · ' + league : ''}</span>
+        ${pmStatus === 'live' ? '<span class="mp-live-dot"></span>' : ''}
+        <span class="mp-league">${q}</span>
+        <span class="mp-collapse-arrow">▾</span>
+      </div>
+      <div class="match-panel-body">
+        <div class="mp-scoreboard">
+          <div class="mp-team left">
+            <div class="mp-team-name">${t1name}</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+            <div class="mp-status-chip ${pmStatus}">${statusChip}</div>
+            ${seriesData.hasMaps
+              ? `<div class="mp-series-score">
+                  <span class="s1">${seriesData.w1}</span>
+                  <span class="sep">–</span>
+                  <span class="s2">${seriesData.w2}</span>
+                </div>`
+              : `<div style="font-family:var(--mono);font-size:.7rem;color:var(--muted);margin:4px 0">
+                  ${pmStatus === 'live' ? '🔴 In progress' : pmStatus === 'final' ? 'Finished' : 'Not started'}
+                </div>`
+            }
+            <div class="mp-bo">Best of ${bestOf}</div>
+          </div>
+          <div class="mp-team right">
+            <div class="mp-team-name">${t2name}</div>
+          </div>
+        </div>
+        ${seriesData.tilesHtml}
+        ${noticeHtml}
+        ${pmOddsHtml}
+        <div class="mp-refresh-ts">Polymarket data · ${new Date().toLocaleTimeString()}</div>
+      </div>
+    </div>`;
+}
+
+// ─────────────────────────────────────────────────────────
+//  PANDASCORE — improved fetcher with broader fallback
+// ─────────────────────────────────────────────────────────
+
+async function fetchPandaScoreState(sport, teamNames, titleText) {
+  if (!pandaScoreKey) return null;
+  const slug = PANDA_SLUGS[sport];
+  if (!slug) return null;
+
+  const headers = { Accept: 'application/json' };
+  const base    = `https://api.pandascore.co/${slug}/matches`;
+  const token   = `token=${encodeURIComponent(pandaScoreKey)}`;
+
+  let match = null;
+
+  // Helper: fetch + parse safely
+  async function pandaFetch(url) {
+    const r = await fetch(url, { headers });
+    if (r.status === 401 || r.status === 403) throw new Error(`PandaScore: invalid API key (${r.status})`);
+    if (!r.ok) return [];
+    const d = await r.json();
+    return Array.isArray(d) ? d : [];
+  }
+
+  // Build extended name list from teamNames + title-parsed "X vs Y"
+  let allNames = [...(teamNames || [])];
+  if (titleText) {
+    const vsM = titleText.match(/([A-Za-z0-9 &.']+?)\s+vs\.?\s+([A-Za-z0-9 &.']+?)(?:\s*[-\u2013(]|$)/i);
+    if (vsM) {
+      const t1 = vsM[1].trim().replace(/^(counter-strike|honor of kings|cs2|valorant|dota\s*2?)[:\s]*/i,'').trim();
+      const t2 = vsM[2].trim();
+      if (t1 && !allNames.find(n => n.toLowerCase() === t1.toLowerCase())) allNames.push(t1);
+      if (t2 && !allNames.find(n => n.toLowerCase() === t2.toLowerCase())) allNames.push(t2);
+    }
+  }
+  const searchNames = allNames.length ? allNames : null;
+
+  // Date window: matches starting within past 24h or next 72h
+  const now    = Date.now();
+  const rangeStart = new Date(now - 24*60*60*1000).toISOString().slice(0,19);
+  const rangeEnd   = new Date(now + 72*60*60*1000).toISOString().slice(0,19);
+  const dateFilter = `&range[begin_at]=${encodeURIComponent(rangeStart + 'Z')},${encodeURIComponent(rangeEnd + 'Z')}`;
+
+  // 1. Running matches — try name-filtered, fallback to first running
+  const runList = await pandaFetch(`${base}?filter[status]=running&sort=-begin_at&page[size]=50&${token}`);
+  match = pickPandaMatch(runList, searchNames);
+  if (!match && runList.length) match = runList[0];
+
+  // 2. Try PandaScore search by team name if no running match found
+  if (!match && searchNames) {
+    for (const name of searchNames.slice(0, 2)) {
+      const searchList = await pandaFetch(
+        `${base}?search[opponent_name]=${encodeURIComponent(name)}&sort=-begin_at&page[size]=20&${token}`
+      );
+      match = pickPandaMatch(searchList, searchNames);
+      if (match) break;
+    }
+  }
+
+  // 3. Upcoming in date window
+  if (!match) {
+    const upList = await pandaFetch(`${base}?filter[status]=not_started&sort=begin_at&page[size]=50${dateFilter}&${token}`);
+    match = pickPandaMatch(upList, searchNames) || (upList.length ? upList[0] : null);
+  }
+
+  // 4. Recently finished
+  if (!match) {
+    const finList = await pandaFetch(`${base}?filter[status]=finished&sort=-end_at&page[size]=20&${token}`);
+    match = pickPandaMatch(finList, searchNames) || (finList.length ? finList[0] : null);
+  }
+
+  if (!match) { currentPandaRaw = null; return null; }
+
+  // 5. Fetch deep per-game detail
+  let games = match.games || [];
+  try {
+    const gList = await pandaFetch(
+      `https://api.pandascore.co/${slug}/matches/${match.id}/games?${token}`
+    );
+    if (gList.length) games = gList;
+  } catch(e) {}
+
+  currentPandaRaw   = { ...match, games };
+  currentPandaSport = sport;
+
+  return buildPandaScoreState(currentPandaRaw);
+}
+
+function pickPandaMatch(list, teamNames) {
+  if (!list || !list.length) return null;
+  if (teamNames && teamNames.length) {
+    const found = list.find(m => {
+      const opp = (m.opponents || []).map(o =>
+        ((o.opponent?.name || '') + ' ' + (o.opponent?.acronym || '')).toLowerCase()
+      );
+      return teamNames.some(tn => opp.some(n => fuzzyMatch(n, tn.toLowerCase())));
+    });
+    if (found) return found;
+  }
+  return list[0];
+}
+
+function buildPandaScoreState(match) {
+  const status =
+    match.status === 'running'    ? 'live'
+    : match.status === 'finished' ? 'final'
+    : 'upcoming';
+
+  const opponents = match.opponents || [];
+  const results   = match.results   || [];
+  let score = null;
+  if (opponents.length >= 2) {
+    const o1 = opponents[0]?.opponent;
+    const o2 = opponents[1]?.opponent;
+    const r1 = results.find(r => r.team_id === o1?.id)?.score ?? 0;
+    const r2 = results.find(r => r.team_id === o2?.id)?.score ?? 0;
+    score = {
+      t1: { name: o1?.acronym || o1?.name || 'Team 1', wins: r1 },
+      t2: { name: o2?.acronym || o2?.name || 'Team 2', wins: r2 }
+    };
+  }
+
+  const games          = match.games || [];
+  const completedGames = games.filter(g => g.status === 'finished').length;
+  const runningGame    = games.find(g => g.status === 'running');
+  const currentGame    = runningGame
+    ? games.indexOf(runningGame) + 1
+    : completedGames + (status === 'live' ? 1 : 0);
+
+  const bestOf    = match.number_of_games;
+  const gameTxt   = currentGame ? `Game ${currentGame}` : '';
+  const seriesTxt = bestOf ? `Bo${bestOf}` : '';
+  const label     = [gameTxt, seriesTxt].filter(Boolean).join(' • ');
+  const detail    = match.league?.name || match.tournament?.name || match.serie?.full_name || '';
+
+  return { status, label, detail, score, source: 'PandaScore' };
+}
+
+// ─────────────────────────────────────────────────────────
+//  MATCH PANEL — rich live detail renderer
+// ─────────────────────────────────────────────────────────
+
+const SPORT_ICONS = {
+  cs2: '🔫', valorant: '🎯', dota2: '⚔️', hok: '👑', pubg: '🪖',
+  lol: '🏆', nba: '🏀', nfl: '🏈', nhl: '🏒', mlb: '⚾', soccer: '⚽'
+};
+const SPORT_LABELS = {
+  cs2: 'CS2', valorant: 'VALORANT', dota2: 'Dota 2',
+  hok: 'Honor of Kings', pubg: 'PUBG', lol: 'League of Legends'
+};
+
+let mpCollapsed = false;
+
+function toggleMatchPanel() {
+  mpCollapsed = !mpCollapsed;
+  const el = document.getElementById('match-panel-el');
+  if (el) el.classList.toggle('collapsed', mpCollapsed);
+}
+
+function renderMatchPanel(match, sport) {
+  const wrap = document.getElementById('match-panel-wrap');
+  if (!wrap) return;
+  if (!match) { wrap.innerHTML = ''; return; }
+
+  const opp    = match.opponents || [];
+  const res    = match.results   || [];
+  const games  = match.games     || [];
+  const o1     = opp[0]?.opponent;
+  const o2     = opp[1]?.opponent;
+  const r1     = o1 ? (res.find(r => r.team_id === o1.id)?.score ?? 0) : 0;
+  const r2     = o2 ? (res.find(r => r.team_id === o2.id)?.score ?? 0) : 0;
+
+  const status = match.status === 'running' ? 'live'
+    : match.status === 'finished' ? 'final' : 'upcoming';
+  const bestOf = match.number_of_games || '?';
+  const league = match.league?.name || match.tournament?.name || match.serie?.full_name || '';
+  const icon   = SPORT_ICONS[sport] || '🎮';
+  const label  = SPORT_LABELS[sport] || sport?.toUpperCase() || 'ESPORTS';
+
+  // Build game rows
+  let gamesHtml = '';
+  if (games.length) {
+    gamesHtml = '<div class="mp-games">';
+    games.forEach((g, i) => {
+      const gStatus  = g.status || 'not_started';
+      const isLive   = gStatus === 'running';
+      const isDone   = gStatus === 'finished';
+      const mapName  = g.map?.name || g.name || `Game ${i+1}`;
+
+      // Get per-team scores in this game
+      // PandaScore stores them differently per sport
+      let gs1 = '—', gs2 = '—';
+      let wonLeft = false, wonRight = false;
+
+      // teams array on game object
+      const gTeams = g.teams || g.players || [];
+      if (gTeams.length >= 2) {
+        // Match by team id to o1/o2
+        const gt1 = o1 ? gTeams.find(t => t.team?.id === o1.id || t.team_id === o1.id) : gTeams[0];
+        const gt2 = o2 ? gTeams.find(t => t.team?.id === o2.id || t.team_id === o2.id) : gTeams[1];
+        gs1 = gt1?.score ?? gt1?.kills ?? '—';
+        gs2 = gt2?.score ?? gt2?.kills ?? '—';
+      } else if (g.winner?.id) {
+        gs1 = g.winner.id === o1?.id ? '✓' : '—';
+        gs2 = g.winner.id === o2?.id ? '✓' : '—';
+      }
+
+      // Winner colouring
+      if (isDone && g.winner?.id) {
+        wonLeft  = g.winner.id === o1?.id;
+        wonRight = g.winner.id === o2?.id;
+      }
+
+      const rowClass = ['mp-game-row',
+        isLive   ? 'live-game'  : '',
+        wonLeft  ? 'won-left'  : '',
+        wonRight ? 'won-right' : ''
+      ].filter(Boolean).join(' ');
+
+      // Status label
+      const statusLbl = isLive ? '🔴 LIVE' : isDone ? 'DONE' : 'UPCOMING';
+
+      // Extra detail: CT/T sides for CS2, rounds etc.
+      let liveDetailHtml = '';
+      if (isLive && (sport === 'cs2' || sport === 'valorant')) {
+        // Try to extract half scores if available
+        const t1half = g.teams?.[0]?.first_half_score ?? null;
+        const t2half = g.teams?.[1]?.first_half_score ?? null;
+        if (t1half !== null) {
+          liveDetailHtml = `
+            <div class="mp-live-detail">
+              <div class="mp-live-detail-title">🔴 In Progress</div>
+              <div class="mp-live-stats">
+                <div class="mp-live-stat"><div class="mp-live-stat-lbl">First Half</div><div class="mp-live-stat-val">${t1half} – ${t2half}</div></div>
+                ${gs1 !== '—' ? `<div class="mp-live-stat"><div class="mp-live-stat-lbl">Current</div><div class="mp-live-stat-val">${gs1} – ${gs2}</div></div>` : ''}
+              </div>
+            </div>`;
+        } else if (isLive) {
+          liveDetailHtml = `<div class="mp-live-detail"><div class="mp-live-detail-title">🔴 Game in progress</div></div>`;
+        }
+      } else if (isLive) {
+        liveDetailHtml = `<div class="mp-live-detail"><div class="mp-live-detail-title">🔴 Game in progress</div></div>`;
+      }
+
+      gamesHtml += `
+        <div class="${rowClass}">
+          <span class="mp-game-num">Game ${i+1} · ${statusLbl}</span>
+          <div class="mp-game-left">
+            <span class="mp-game-team">${o1?.acronym || o1?.name || 'T1'}</span>
+            <span class="mp-game-sub">${wonLeft ? '✓ WIN' : ''}</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:2px;margin-top:10px">
+            <div class="mp-map-name">${mapName}</div>
+            <div class="mp-game-score">
+              <span class="gs1">${gs1}</span>
+              <span class="gsp">:</span>
+              <span class="gs2">${gs2}</span>
+            </div>
+          </div>
+          <div class="mp-game-right">
+            <span class="mp-game-team">${o2?.acronym || o2?.name || 'T2'}</span>
+            <span class="mp-game-sub">${wonRight ? '✓ WIN' : ''}</span>
+          </div>
+        </div>
+        ${liveDetailHtml}`;
+    });
+    gamesHtml += '</div>';
+  } else {
+    gamesHtml = '<div class="mp-nodata">No map/game data yet — will update when series begins.</div>';
+  }
+
+  // Upcoming start time
+  let timeHtml = '';
+  if (status === 'upcoming' && match.begin_at) {
+    const t   = new Date(match.begin_at);
+    const now = Date.now();
+    const diff = t - now;
+    const h = Math.floor(diff / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const countdown = diff > 0
+      ? (h > 0 ? `Starts in ${h}h ${m}m` : `Starts in ${m}m`)
+      : `Started ${Math.abs(h)}h ago`;
+    timeHtml = `<div class="mp-live-stat" style="margin-top:6px"><div class="mp-live-stat-lbl">Scheduled</div><div class="mp-live-stat-val" style="font-size:.75rem">${t.toLocaleString()} · ${countdown}</div></div>`;
+  }
+
+  const ts = new Date().toLocaleTimeString();
+
+  wrap.innerHTML = `
+    <div class="match-panel${mpCollapsed ? ' collapsed' : ''}" id="match-panel-el" data-sport="${sport}">
+      <div class="match-panel-header" onclick="toggleMatchPanel()">
+        <span class="mp-sport-icon">${icon}</span>
+        <span class="mp-title">${label} · ${league || 'Match Intel'}</span>
+        ${status === 'live' ? '<span class="mp-live-dot"></span>' : ''}
+        <span class="mp-league">${match.name || ''}</span>
+        <span class="mp-collapse-arrow">▾</span>
+      </div>
+      <div class="match-panel-body">
+        <!-- Scoreboard -->
+        <div class="mp-scoreboard">
+          <div class="mp-team left">
+            <div class="mp-team-name">${o1?.acronym || o1?.name || '?'}</div>
+            <div class="mp-team-full">${o1?.acronym ? o1.name : ''}</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+            <div class="mp-status-chip ${status}">${status === 'live' ? '● LIVE' : status === 'final' ? 'FINAL' : 'UPCOMING'}</div>
+            <div class="mp-series-score">
+              <span class="s1">${r1}</span>
+              <span class="sep">–</span>
+              <span class="s2">${r2}</span>
+            </div>
+            <div class="mp-bo">Best of ${bestOf}</div>
+            ${timeHtml}
+          </div>
+          <div class="mp-team right">
+            <div class="mp-team-name">${o2?.acronym || o2?.name || '?'}</div>
+            <div class="mp-team-full">${o2?.acronym ? o2.name : ''}</div>
+          </div>
+        </div>
+
+        <!-- Game-by-game breakdown -->
+        ${gamesHtml}
+
+        <div class="mp-refresh-ts">Last updated: ${ts} · via PandaScore${match.name ? ' · ' + match.name : ''}</div>
+      </div>
+    </div>`;
+}
+
+// ─────────────────────────────────────────────────────────
+//  MATCH PANEL — LoL Esports rich renderer
+// ─────────────────────────────────────────────────────────
+function renderMatchPanelLoL(lolEvent, pmEvent, markets, teamNames) {
+  const wrap = document.getElementById('match-panel-wrap');
+  if (!wrap) return;
+
+  const match  = lolEvent.match || {};
+  const teams  = match.teams  || [];
+  const games  = match.games  || [];
+  const strat  = match.strategy || {};
+  const bestOf = strat.count || '?';
+  const league = lolEvent.league?.name || lolEvent.tournament?.name || '';
+
+  const t1 = teams[0] || {};
+  const t2 = teams[1] || {};
+  const r1 = t1.result?.gameWins ?? 0;
+  const r2 = t2.result?.gameWins ?? 0;
+
+  const mState = lolEvent.state || match.state || '';
+  const status = mState === 'inProgress' ? 'live' : mState === 'completed' ? 'final' : 'upcoming';
+  const t1name = t1.code || t1.name || teamNames?.[0] || 'T1';
+  const t2name = t2.code || t2.name || teamNames?.[1] || 'T2';
+
+  // ── Compact game timeline ──────────────────────────────
+  let gamesHtml = '';
+  if (games.length) {
+    gamesHtml = '<div class="mp-game-timeline">';
+    games.forEach((g, i) => {
+      const gs     = g.state || 'unstarted';
+      const isLive = gs === 'inProgress';
+      const isDone = gs === 'completed';
+      const isPending = !isLive && !isDone;
+
+      // Win detection — try ID match first, fall back to positional
+      let wonLeft = false, wonRight = false;
+      if (isDone) {
+        // Try: game has a winner field
+        if (g.winner) {
+          wonLeft  = (g.winner.id === t1.id) || (!t1.id && i === 0);
+          wonRight = (g.winner.id === t2.id) || (!t2.id && i === 1);
+        }
+        // Fallback: use game-level teams result
+        if (!wonLeft && !wonRight && g.teams?.length >= 2) {
+          // Try matching by team ID
+          const gteam1 = g.teams.find(t => t.id === t1.id);
+          const gteam2 = g.teams.find(t => t.id === t2.id);
+          if (gteam1 || gteam2) {
+            wonLeft  = gteam1?.result?.outcome === 'win';
+            wonRight = gteam2?.result?.outcome === 'win';
+          } else {
+            // Positional fallback
+            wonLeft  = g.teams[0]?.result?.outcome === 'win';
+            wonRight = g.teams[1]?.result?.outcome === 'win';
+          }
+        }
+        // Series score crosscheck: completed games ≤ r1+r2
+        // If still unknown, alternate based on series score pattern
+      }
+
+      // Tile appearance
+      let tileClass = 'mp-gtile';
+      let tileContent = '';
+      if (isPending) {
+        tileClass += ' gtile-pending';
+        tileContent = `<span class="gtile-num">G${i+1}</span><span class="gtile-status">·</span>`;
+      } else if (isLive) {
+        tileClass += ' gtile-live';
+        tileContent = `<span class="gtile-num">G${i+1}</span><span class="gtile-status">🔴</span>`;
+      } else if (wonLeft) {
+        tileClass += ' gtile-left';
+        tileContent = `<span class="gtile-num">G${i+1}</span><span class="gtile-winner">${t1name}</span>`;
+      } else if (wonRight) {
+        tileClass += ' gtile-right';
+        tileContent = `<span class="gtile-num">G${i+1}</span><span class="gtile-winner">${t2name}</span>`;
+      } else {
+        tileClass += ' gtile-done';
+        tileContent = `<span class="gtile-num">G${i+1}</span><span class="gtile-status">✓</span>`;
+      }
+
+      gamesHtml += `<div class="${tileClass}">${tileContent}</div>`;
+    });
+    gamesHtml += '</div>';
+  }
+
+  const pmOddsHtml = buildPolymarketOddsHtml(markets, t1name, t2name);
+  const ts = new Date().toLocaleTimeString();
+
+  wrap.innerHTML = `
+    <div class="match-panel${mpCollapsed ? ' collapsed' : ''}" id="match-panel-el" data-sport="lol">
+      <div class="match-panel-header" onclick="toggleMatchPanel()">
+        <span class="mp-sport-icon">🏆</span>
+        <span class="mp-title">League of Legends${league ? ' · ' + league : ''}</span>
+        ${status === 'live' ? '<span class="mp-live-dot"></span>' : ''}
+        <span class="mp-league">${t1.name || t1name} vs ${t2.name || t2name}</span>
+        <span class="mp-collapse-arrow">▾</span>
+      </div>
+      <div class="match-panel-body">
+        <div class="mp-scoreboard">
+          <div class="mp-team left">
+            <div class="mp-team-name">${t1name}</div>
+            <div class="mp-team-full">${t1.code && t1.name !== t1.code ? t1.name : ''}</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+            <div class="mp-status-chip ${status}">${status === 'live' ? '● LIVE' : status === 'final' ? 'FINAL' : 'UPCOMING'}</div>
+            <div class="mp-series-score">
+              <span class="s1">${r1}</span><span class="sep">–</span><span class="s2">${r2}</span>
+            </div>
+            <div class="mp-bo">Best of ${bestOf}</div>
+          </div>
+          <div class="mp-team right">
+            <div class="mp-team-name">${t2name}</div>
+            <div class="mp-team-full">${t2.code && t2.name !== t2.code ? t2.name : ''}</div>
+          </div>
+        </div>
+        ${gamesHtml}
+        ${pmOddsHtml}
+        <div class="mp-refresh-ts">Last updated: ${ts} · via LoL Esports</div>
+      </div>
+    </div>`;
+}
+
+// ─────────────────────────────────────────────────────────
+//  MATCH PANEL — Generic state-based renderer (ESPN sports)
+// ─────────────────────────────────────────────────────────
+function renderMatchPanelFromState(state, pmEvent, markets, sport, teamNames) {
+  const wrap = document.getElementById('match-panel-wrap');
+  if (!wrap) return;
+
+  const icon  = SPORT_ICONS[sport]  || '🏟️';
+  const label = SPORT_LABELS[sport] || sport?.toUpperCase() || 'SPORT';
+  const t1name = state.score?.t1?.name || teamNames?.[0] || '?';
+  const t2name = state.score?.t2?.name || teamNames?.[1] || '?';
+  const r1 = state.score?.t1?.wins ?? '?';
+  const r2 = state.score?.t2?.wins ?? '?';
+  const status = state.status || 'upcoming';
+  const statusChip = status === 'live' ? '● LIVE' : status === 'final' ? 'FINAL' : 'UPCOMING';
+
+  const pmOddsHtml = buildPolymarketOddsHtml(markets, t1name, t2name);
+  const ts = new Date().toLocaleTimeString();
+
+  // State detail rows
+  let detailHtml = '';
+  if (state.label) detailHtml += `<div class="mp-live-stat"><div class="mp-live-stat-lbl">Game</div><div class="mp-live-stat-val">${state.label}</div></div>`;
+  if (state.detail) detailHtml += `<div class="mp-live-stat"><div class="mp-live-stat-lbl">League</div><div class="mp-live-stat-val">${state.detail}</div></div>`;
+
+  wrap.innerHTML = `
+    <div class="match-panel${mpCollapsed ? ' collapsed' : ''}" id="match-panel-el" data-sport="${sport}">
+      <div class="match-panel-header" onclick="toggleMatchPanel()">
+        <span class="mp-sport-icon">${icon}</span>
+        <span class="mp-title">${label}${state.detail ? ' · ' + state.detail : ''}</span>
+        ${status === 'live' ? '<span class="mp-live-dot"></span>' : ''}
+        <span class="mp-league">${t1name} vs ${t2name}</span>
+        <span class="mp-collapse-arrow">▾</span>
+      </div>
+      <div class="match-panel-body">
+        <div class="mp-scoreboard">
+          <div class="mp-team left"><div class="mp-team-name">${t1name}</div></div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+            <div class="mp-status-chip ${status}">${statusChip}</div>
+            <div class="mp-series-score">
+              <span class="s1">${r1}</span><span class="sep">–</span><span class="s2">${r2}</span>
+            </div>
+            ${state.label ? `<div class="mp-bo">${state.label}</div>` : ''}
+          </div>
+          <div class="mp-team right"><div class="mp-team-name">${t2name}</div></div>
+        </div>
+        ${detailHtml ? `<div class="mp-live-stats" style="margin-bottom:10px">${detailHtml}</div>` : ''}
+        ${pmOddsHtml}
+        <div class="mp-refresh-ts">Last updated: ${ts}${state.source ? ' · via ' + state.source : ''}</div>
+      </div>
+    </div>`;
+}
+
+// ── Shared: build Polymarket implied odds HTML block ──────
+// ─────────────────────────────────────────────────────────
+//  Derive series state from Polymarket sub-markets
+//  Settled maps have outcomePrices ["1","0"] or ["0","1"]
+//  Live/upcoming maps have prices in (0,1)
+// ─────────────────────────────────────────────────────────
+
+// ─────────────────────────────────────────────────────────
+//  SERIES INFERENCE FROM POLYMARKET MAP SUB-MARKETS
+//  Reads Map 1/2/3... Winner prices to infer live match state
+//  without needing an external data source.
+// ─────────────────────────────────────────────────────────
+function deriveSeriesFromMarkets(markets, t1name, t2name, bestOf) {
+  const result = { w1: '?', w2: '?', hasMaps: false, tilesHtml: '' };
+  if (!markets || !markets.length) return result;
+
+  // Helper: extract YES price from a market
+  function getP(m) {
+    try {
+      const prices = typeof m.outcomePrices === 'string'
+        ? JSON.parse(m.outcomePrices)
+        : (Array.isArray(m.outcomePrices) ? m.outcomePrices : []);
+      const p = parseFloat(prices[0]);
+      if (p >= 0 && p <= 1) return p;
+    } catch(e) {}
+    if (m.bestBid && m.bestAsk)
+      return (parseFloat(m.bestBid) + parseFloat(m.bestAsk)) / 2;
+    return -1;
+  }
+
+  // Find per-map markets: "Map 1 Winner", "Map 2 Winner", etc.
+  const mapMarkets = [];
+  for (const m of markets) {
+    const lbl = (m.groupItemTitle || m.question || '').toLowerCase();
+    const mapNum = lbl.match(/map\s*(\d+)\s*winner/i) || lbl.match(/game\s*(\d+)\s*winner/i);
+    if (mapNum) {
+      mapMarkets.push({ num: parseInt(mapNum[1]), market: m, price: getP(m) });
+    }
+  }
+  mapMarkets.sort((a, b) => a.num - b.num);
+
+  if (!mapMarkets.length) return result;
+  result.hasMaps = true;
+
+  // Interpret each map's price:
+  //   price ≥ 0.95  → t1 won this map (settled YES)
+  //   price ≤ 0.05  → t2 won this map (settled NO)
+  //   0.05 < p < 0.95 → map live or upcoming
+  // A map is "upcoming" if all prior maps are settled
+  let w1 = 0, w2 = 0;
+  let foundLive = false;
+  const tiles = [];
+
+  mapMarkets.forEach(({ num, price }) => {
+    if (price < 0) {
+      // No price data — pending
+      tiles.push({ num, state: 'pending' });
+      return;
+    }
+    if (price >= 0.95) {
+      // t1 won
+      w1++;
+      tiles.push({ num, state: 'done-left' });
+    } else if (price <= 0.05) {
+      // t2 won
+      w2++;
+      tiles.push({ num, state: 'done-right' });
+    } else if (!foundLive) {
+      // First unsettled map = the current live one
+      foundLive = true;
+      tiles.push({ num, state: 'live' });
+    } else {
+      // Subsequent unsettled maps = upcoming
+      tiles.push({ num, state: 'pending' });
+    }
+  });
+
+  result.w1 = String(w1);
+  result.w2 = String(w2);
+
+  // Build tile HTML
+  result.tilesHtml = `<div class="mp-game-timeline">` + tiles.map(t => {
+    let cls = 'mp-gtile ', winner = '';
+    if (t.state === 'live')       { cls += 'gtile-live';  winner = '🔴'; }
+    else if (t.state === 'done-left')  { cls += 'gtile-left';  winner = t1name || 'T1'; }
+    else if (t.state === 'done-right') { cls += 'gtile-right'; winner = t2name || 'T2'; }
+    else                               { cls += 'gtile-pending'; winner = '·'; }
+    return `<div class="${cls}">
+      <span class="gtile-num">Map ${t.num}</span>
+      <span class="gtile-winner">${winner}</span>
+    </div>`;
+  }).join('') + `</div>
+  <div style="font-family:var(--mono);font-size:.58rem;color:var(--muted);margin:-6px 0 8px;opacity:.7">
+    ⟳ Map results inferred from Polymarket settlement prices
+  </div>`;
+
+  return result;
+}
+
+function buildPolymarketOddsHtml(markets, t1name, t2name) {
+  if (!markets || !markets.length) return '';
+
+  // Helper: extract YES price from a market
+  function getYesPrice(m) {
+    try {
+      const prices = typeof m.outcomePrices === 'string'
+        ? JSON.parse(m.outcomePrices)
+        : (Array.isArray(m.outcomePrices) ? m.outcomePrices : []);
+      const p = parseFloat(prices[0]);
+      if (p > 0 && p <= 1) return p;
+    } catch(e) {}
+    if (m.bestBid && m.bestAsk)
+      return (parseFloat(m.bestBid) + parseFloat(m.bestAsk)) / 2;
+    return 0;
+  }
+
+  // Smart label: strip long prefixes, keep the meaningful part
+  function shortLabel(m) {
+    const raw = m.groupItemTitle || m.question || '';
+    // "LoL: G2 vs BLG (BO5) - First Stand - Game 3 Winner" → "Game 3 Winner"
+    // Try: last segment after " - "
+    const parts = raw.split(/\s+[-–]\s+/);
+    if (parts.length > 1) return parts[parts.length - 1].trim();
+    // Try: strip "Sport: teams - " prefix
+    return raw.replace(/^[^:]+:\s*[^–\-]+[-–]\s*/,'').trim() || raw;
+  }
+
+  let vol = markets.reduce((s, m) => s + parseFloat(m.volume || 0), 0);
+  const volStr = vol >= 1e6 ? `$${(vol/1e6).toFixed(1)}M` : vol >= 1e3 ? `$${(vol/1e3).toFixed(0)}K` : vol > 0 ? `$${vol.toFixed(0)}` : '—';
+
+  // Find the series winner markets for the two teams
+  // They appear as separate binary markets where one outcome is the team winning
+  let p1 = 0, p2 = 0;
+  const seriesMarkets = markets.filter(m => {
+    const label = (m.groupItemTitle || m.question || '').toLowerCase();
+    return !label.includes('game 1') && !label.includes('game 2') && !label.includes('game 3')
+      && !label.includes('game 4') && !label.includes('game 5') && !label.includes('total')
+      && !label.includes('o/u') && !label.includes('over') && !label.includes('under');
+  });
+
+  // If the event has paired markets (t1 wins / t2 wins), find them
+  // Pattern 1: outcomes = ["TeamA", "TeamB"] in one market → use prices[0] and prices[1]
+  for (const m of markets) {
+    try {
+      const out = typeof m.outcomes === 'string' ? JSON.parse(m.outcomes) : m.outcomes;
+      if (Array.isArray(out) && out.length === 2 && out[0] !== 'Yes' && out[0] !== 'No') {
+        const prices = typeof m.outcomePrices === 'string' ? JSON.parse(m.outcomePrices) : m.outcomePrices;
+        p1 = parseFloat(prices[0]) || 0;
+        p2 = parseFloat(prices[1]) || 0;
+        break;
+      }
+    } catch(e) {}
+  }
+
+  // Pattern 2: separate YES/NO markets, one per team
+  if (!p1 && !p2 && seriesMarkets.length >= 2) {
+    const prices = seriesMarkets.map(m => getYesPrice(m)).filter(p => p > 0);
+    if (prices.length >= 2) { p1 = prices[0]; p2 = prices[1]; }
+    else if (prices.length === 1) { p1 = prices[0]; p2 = 1 - p1; }
+  } else if (!p1 && !p2 && seriesMarkets.length === 1) {
+    p1 = getYesPrice(seriesMarkets[0]);
+    p2 = p1 > 0 ? 1 - p1 : 0;
+  }
+
+  // Build output
+  let html = `<div class="mp-pm-section-lbl">📊 Polymarket Implied Odds</div>`;
+
+  // Dual bar for series winner
+  if (p1 > 0 || p2 > 0) {
+    const total  = p1 + p2 || 1;
+    const w1     = ((p1 / total) * 100).toFixed(0);
+    const w2     = ((p2 / total) * 100).toFixed(0);
+    const pct1   = p1 > 0 ? (p1 * 100).toFixed(1) + '%' : '—';
+    const pct2   = p2 > 0 ? (p2 * 100).toFixed(1) + '%' : '—';
+    const name1  = t1name || 'Team 1';
+    const name2  = t2name || 'Team 2';
+    html += `
+    <div class="mp-odds-bar">
+      <div class="mp-odds-teams">
+        <span class="mp-odds-t1">${name1}</span>
+        <span class="mp-odds-t2">${name2}</span>
+      </div>
+      <div class="mp-odds-row">
+        <span class="mp-odds-pct1">${pct1}</span>
+        <div class="mp-odds-track">
+          <div class="mp-odds-fill-1" style="width:${w1}%"></div>
+          <div class="mp-odds-fill-2" style="width:${w2}%"></div>
+        </div>
+        <span class="mp-odds-pct2">${pct2}</span>
+      </div>
+    </div>`;
+  }
+
+  // Sub-markets table (game winners, totals etc.) — only show those with live prices
+  const subMarkets = markets.filter(m => {
+    const p = getYesPrice(m);
+    return p > 0 && p < 1; // skip settled (0 or 1) and unknown (0)
+  });
+
+  if (subMarkets.length) {
+    html += `<div class="mp-pm-markets">`;
+    subMarkets.slice(0, 6).forEach(m => {
+      const p     = getYesPrice(m);
+      const pct   = (p * 100).toFixed(1) + '%';
+      const color = p > 0.65 ? 'var(--green)' : p < 0.35 ? 'var(--red)' : 'var(--muted)';
+      const lbl   = shortLabel(m);
+      const full  = m.groupItemTitle || m.question || '';
+      html += `<div class="mp-pm-row">
+        <span class="mp-pm-label" title="${full}">${lbl}</span>
+        <span class="mp-pm-pct" style="color:${color}">${pct}</span>
+      </div>`;
+    });
+    html += `</div>`;
+  }
+
+  html += `<div class="mp-pm-vol">Volume: <b>${volStr}</b></div>`;
+  return html;
 }
 
 // ── ESPN unofficial API ───────────────────────────────────
@@ -3030,9 +4462,20 @@ function toggleAuto() {
     autoTimer = setInterval(async () => {
       tick++;
       try { await refreshOrderbook(true); } catch(e) {}
-      // Refresh game state every 6 ticks (~30s) — less frequent than orderbook
-      if (tick % 6 === 0 && currentEventInfo) {
-        try { await fetchGameState(currentEventInfo.event, currentEventInfo.markets); } catch(e) {}
+      // Refresh game state + CLOB trades every 6 ticks (~30s)
+      if (tick % 6 === 0) {
+        if (currentEventInfo) {
+          try { await fetchGameState(currentEventInfo.event, currentEventInfo.markets); } catch(e) {}
+        }
+        // Step 1+2: refresh matched trades + pattern detection
+        try { await fetchCLOBTrades(); } catch(e) {}
+        renderChainTracking();   // Step 3: update wallet list as new trades arrive
+      }
+      // Re-render match panel every tick if live data is available
+      if (currentPandaRaw && currentPandaSport && currentPandaRaw.status === 'running') {
+        renderMatchPanel(currentPandaRaw, currentPandaSport);
+      } else if (currentLoLRaw && currentEventInfo) {
+        renderMatchPanelLoL(currentLoLRaw, currentEventInfo.event, currentEventInfo.markets, null);
       }
     }, 5000);
   } else {
@@ -3097,6 +4540,216 @@ function useExample(url) {
 // ─────────────────────────────────────────────────────────
 //  INIT
 // ─────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────
+//  STEP 1 + 2 — CLOB MATCHED TRADES + PATTERN DETECTION
+//  Fetches from: clob.polymarket.com/trades?market=<conditionId>
+//  Detects: whale trades (> $1000 USDC) & volume spikes
+// ─────────────────────────────────────────────────────────
+
+const WHALE_THRESHOLD_USDC = 1000;   // Step 2: flag trades above this as 🐋
+const VOL_WINDOW_SECS      = 60;     // Step 2: volume spike window (1 min)
+const VOL_SPIKE_MULTIPLIER = 2;      // Step 2: spike = last-60s volume > avg * 2
+
+let clobTradeHistory = []; // rolling buffer for volume spike detection
+
+async function fetchCLOBTrades() {
+  const cid = currentConditionId;
+  const el  = document.getElementById('clob-trades-wrap');
+  if (!el) return;
+
+  if (!cid) {
+    el.innerHTML = `<div class="ob-empty" style="padding:24px">
+      No Condition ID found — CLOB trades unavailable.<br>
+      <span style="font-size:.65rem;color:var(--muted)">Some markets only expose token IDs; trades require a condition ID from the Gamma API.</span>
+    </div>`;
+    return;
+  }
+
+  el.innerHTML = '<div class="loader"><div class="spinner"></div> Fetching CLOB matched trades…</div>';
+
+  try {
+    // Step 1: fetch from CLOB trades endpoint
+    const url  = `${CLOB_API}/trades?market=${cid}&limit=50`;
+    const data = await fetchCLOB(url);
+    const trades = (Array.isArray(data) ? data : (data.data || data.trades || []));
+    clobTradeHistory = trades; // store for auto-refresh spike detection
+    renderCLOBTrades(trades);
+  } catch(e) {
+    el.innerHTML = `<div class="error-box">⚠ CLOB trades fetch failed: ${e.message}<br>
+      <span style="font-size:.68rem;opacity:.8">Endpoint: ${CLOB_API}/trades?market=${cid}</span></div>`;
+  }
+}
+
+// Step 2: render trades table with whale detection + volume spike alert
+function renderCLOBTrades(trades) {
+  const el      = document.getElementById('clob-trades-wrap');
+  const spikeEl = document.getElementById('vol-spike-wrap');
+  if (!el) return;
+
+  // ── Volume spike detection (Step 2) ──
+  const now = Date.now() / 1000;
+  const recent = trades.filter(t => {
+    const ts = t.timestamp ? (typeof t.timestamp === 'string'
+      ? new Date(t.timestamp).getTime() / 1000
+      : Number(t.timestamp)) : 0;
+    return (now - ts) < VOL_WINDOW_SECS;
+  });
+  const recentVol  = recent.reduce((s, t) => s + parseFloat(t.size || 0) * parseFloat(t.price || 0), 0);
+  const totalVol   = trades.reduce((s, t) => s + parseFloat(t.size || 0) * parseFloat(t.price || 0), 0);
+  const avgPerMin  = trades.length > 0 && totalVol > 0
+    ? totalVol / Math.max(1, trades.length) * (VOL_WINDOW_SECS / 60)
+    : 0;
+  const isSpike = recentVol > 0 && avgPerMin > 0 && recentVol > avgPerMin * VOL_SPIKE_MULTIPLIER;
+
+  if (spikeEl) {
+    if (isSpike) {
+      spikeEl.innerHTML = `<div class="vol-spike-alert">
+        <span class="vol-spike-badge">🔥 SPIKE</span>
+        <span class="vol-spike-label">Volume Spike Detected</span>
+        <span class="vol-spike-detail">Last 60s: $${recentVol.toFixed(0)} USDC vs avg $${avgPerMin.toFixed(0)}/min — ${(recentVol / avgPerMin).toFixed(1)}x normal</span>
+      </div>`;
+    } else {
+      spikeEl.innerHTML = '';
+    }
+  }
+
+  if (!trades || trades.length === 0) {
+    el.innerHTML = `<div class="trades-table-wrap"><div class="ob-empty" style="padding:24px">
+      No matched trades found via CLOB for this condition ID.<br>
+      <span style="font-size:.65rem;color:var(--muted)">Trades only appear after orders are matched. Check back once trading begins.</span>
+    </div></div>`;
+    return;
+  }
+
+  // ── Render trades table with whale flagging ──
+  let whaleCount = 0;
+  const rows = trades.slice(0, 50).map(t => {
+    const side     = (t.side || t.maker_side || 'BUY').toUpperCase();
+    const price    = parseFloat(t.price || 0);
+    const size     = parseFloat(t.size || t.original_size || 0);
+    const usdc     = price * size;
+    const isWhale  = usdc >= WHALE_THRESHOLD_USDC;
+    if (isWhale) whaleCount++;
+
+    // Timestamp formatting
+    let ageStr = '—';
+    if (t.timestamp) {
+      const ts  = typeof t.timestamp === 'string' ? new Date(t.timestamp).getTime() : Number(t.timestamp) * 1000;
+      const age = Math.round((Date.now() - ts) / 1000);
+      ageStr = age < 60 ? age + 's ago' : age < 3600 ? Math.round(age/60) + 'm ago' : Math.round(age/3600) + 'h ago';
+    }
+
+    // Maker wallet — link to PolygonScan (Step 3 synergy)
+    const maker = t.maker_address || t.taker_address || '';
+    const makerHtml = maker
+      ? `<a href="https://polygonscan.com/address/${maker}" target="_blank" rel="noopener"
+           class="td-hash" title="Track wallet on PolygonScan: ${maker}">${maker.slice(0,6)}…${maker.slice(-4)}</a>`
+      : '—';
+
+    return `<tr class="${isWhale ? 'clob-trade-whale' : ''}">
+      <td class="${side === 'BUY' ? 'td-buy' : 'td-sell'}">${side}</td>
+      <td>${fmtP(price)}</td>
+      <td>${fmtSize(size)}</td>
+      <td>${usdc > 0 ? '$' + usdc.toFixed(2) : '—'}</td>
+      <td>${makerHtml}</td>
+      <td class="td-age">${ageStr}</td>
+    </tr>`;
+  }).join('');
+
+  const whaleNote = whaleCount > 0
+    ? `· 🐋 ${whaleCount} whale trade${whaleCount>1?'s':''} (>$${WHALE_THRESHOLD_USDC})`
+    : '';
+
+  el.innerHTML = `
+    <div class="trades-table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Side</th><th>Price</th><th>Shares</th><th>USDC</th>
+            <th>Maker Wallet ↗ PolygonScan</th><th>Age</th>
+          </tr>
+        </thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>
+    <div class="update-ts">
+      Showing ${Math.min(trades.length, 50)} of ${trades.length} matched CLOB trades ${whaleNote}
+      · Whale threshold: $${WHALE_THRESHOLD_USDC} USDC · click wallet to track on PolygonScan
+    </div>`;
+}
+
+// ─────────────────────────────────────────────────────────
+//  STEP 3 — BLOCKCHAIN TRACKING PANEL
+//  Shows PolygonScan links for: condition ID, CTF contracts,
+//  and top wallets seen in CLOB trades
+// ─────────────────────────────────────────────────────────
+function renderChainTracking() {
+  const el = document.getElementById('chain-tracking-wrap');
+  if (!el) return;
+
+  const cid = currentConditionId;
+
+  // Build wallet frequency map from CLOB trade history
+  const walletMap = {};
+  clobTradeHistory.forEach(t => {
+    const addr = t.maker_address || t.taker_address;
+    if (!addr) return;
+    if (!walletMap[addr]) walletMap[addr] = { count: 0, vol: 0 };
+    walletMap[addr].count++;
+    walletMap[addr].vol += parseFloat(t.price || 0) * parseFloat(t.size || 0);
+  });
+
+  const topWallets = Object.entries(walletMap)
+    .sort((a, b) => b[1].vol - a[1].vol)
+    .slice(0, 10);
+
+  // PolygonScan links
+  const cidRow = cid ? `
+    <div class="chain-track-row">
+      <span class="chain-track-lbl">Condition ID</span>
+      <span class="chain-track-val" title="${cid}">${cid.slice(0,14)}…${cid.slice(-6)}</span>
+      <a class="polyscan-btn" href="https://polygonscan.com/token/0x4D97DCd97eC945f40cF65F87097ACe5EA0476045?a=${cid}" target="_blank" rel="noopener">View CTF Token</a>
+    </div>` : '';
+
+  const contractRows = CTF_CONTRACTS.map((addr, i) => `
+    <div class="chain-track-row">
+      <span class="chain-track-lbl">${i === 0 ? 'Standard CTF' : 'NegRisk CTF'}</span>
+      <span class="chain-track-val" title="${addr}">${addr.slice(0,10)}…${addr.slice(-6)}</span>
+      <a class="polyscan-btn" href="https://polygonscan.com/address/${addr}#events" target="_blank" rel="noopener">Events Log</a>
+    </div>`).join('');
+
+  const walletsHtml = topWallets.length ? `
+    <div class="chain-track-row" style="flex-direction:column;align-items:flex-start;gap:6px;padding-bottom:0">
+      <span class="chain-track-lbl" style="margin-bottom:2px">Top Wallets <span style="font-size:.58rem;font-weight:400">(by volume from CLOB trades)</span></span>
+    </div>
+    <div class="chain-track-wallets">
+      ${topWallets.map(([addr, info]) => `
+        <div class="wallet-row">
+          <a class="wallet-addr" href="https://polygonscan.com/address/${addr}" target="_blank" rel="noopener" title="Track on PolygonScan">${addr.slice(0,8)}…${addr.slice(-6)}</a>
+          <span class="wallet-vol">$${info.vol < 1000 ? info.vol.toFixed(0) : (info.vol/1000).toFixed(1)+'k'}</span>
+          <span class="wallet-count">${info.count} trade${info.count>1?'s':''}</span>
+          <a class="polyscan-btn" href="https://polygonscan.com/address/${addr}" target="_blank" rel="noopener">Track ↗</a>
+        </div>
+      `).join('')}
+    </div>` : `<div class="chain-track-note">Load a market and wait for CLOB trades to appear — wallet addresses will be listed here for PolygonScan tracking.</div>`;
+
+  el.innerHTML = `
+    <div class="chain-track-panel">
+      ${cidRow}
+      ${contractRows}
+      <div class="chain-track-row" style="background:rgba(9,105,218,.03)">
+        <span class="chain-track-lbl">CLOB Trades</span>
+        <span class="chain-track-val">clob.polymarket.com/trades?market=<wbr>${cid ? cid.slice(0,12)+'…' : '(no condition ID yet)'}</span>
+        ${cid ? `<a class="polyscan-btn" href="${CLOB_API}/trades?market=${cid}" target="_blank" rel="noopener" style="--blue:#00875a;background:rgba(0,135,90,.08);border-color:rgba(0,135,90,.28);color:var(--green)">Open API ↗</a>` : ''}
+      </div>
+      ${walletsHtml}
+      <div class="chain-track-note">
+        💡 <b>Smart money tracking (Step 3):</b> Click any wallet to open it on PolygonScan and inspect entry price patterns, timing before events, and token transfer history. 
+        Wallets with large volumes appearing early are indicators of informed trading.
+      </div>
+    </div>`;
+}
+
 loadHistory();
 renderHistory();
 
